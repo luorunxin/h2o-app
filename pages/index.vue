@@ -15,7 +15,7 @@ export default {
     return {
 
     }
-  }
+  },
 }
 </script>
 
@@ -32,7 +32,7 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     display: block;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 5rem;
     color: #FF8000;
     letter-spacing: 1px;
   }
