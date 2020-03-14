@@ -7,6 +7,21 @@ const app = new Koa()
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
+const os = require('os');
+
+
+function getIPAdress() {
+  var interfaces = os.networkInterfaces();
+  for (var devName in interfaces) {
+    var iface = interfaces[devName];
+    for (var i = 0; i < iface.length; i++) {
+      var alias = iface[i];
+      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+        return alias.address;
+      }
+    }
+  }
+}
 
 async function start () {
   // Instantiate nuxt.js
@@ -16,7 +31,7 @@ async function start () {
   //   host = process.env.HOST || '192.168.0.103',
   //   port = process.env.PORT || 3000
   // } = nuxt.options.server
-  const host = '192.168.0.103'
+  const host = getIPAdress()
   const port = process.env.PORT || 3000
 
 
