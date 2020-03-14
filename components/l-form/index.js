@@ -1,4 +1,4 @@
-export { default } from './src/xhForm'
+export { default } from './src/lForm'
 
 /**
  * @Description:  使用
