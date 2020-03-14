@@ -1,15 +1,33 @@
 <template>
   <div>
-    <!--<div class="top"></div>-->
     <l-refresh
       ref="refresh"
       @refresh="refresh"
     >
       <div class="container">
-        <div>
-          <h1 class="title">
-            h2o
-          </h1>
+        <div class="container-left">
+          <l-card
+            class="card"
+            v-for="(item, index) in list"
+            v-if="index%2 == 0"
+            :key="index"
+            :record="item"
+            @onCardHandle="onCardHandle"
+          >
+            <l-label class="label" :label="item.label" />
+          </l-card>
+        </div>
+        <div class="container-right">
+          <l-card
+            class="card"
+            v-for="(item, index) in list"
+            v-if="index%2 != 0"
+            :key="index"
+            :record="item"
+            @onCardHandle="onCardHandle"
+          >
+            <l-label class="label" :label="item.label" />
+          </l-card>
         </div>
       </div>
     </l-refresh>
@@ -18,16 +36,54 @@
 
 <script>
 import LRefresh from '~/components/l-refresh'
+import LCard from '~/components/l-card'
+import LLabel from '~/components/l-label'
 export default {
   components: {
-    LRefresh
+    LRefresh,
+    LCard,
+    LLabel
   },
   data() {
     return {
-
+      list: [
+        {
+          src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584191214702&di=d330763a4c2d9173eaac684f3e4ea392&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg',
+          title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+          price: 1000,
+          paymentNum: 10000,
+          label: '产地:罗家巷子'
+        },
+        {
+          src: '',
+          title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+          price: 100,
+          paymentNum: 10000,
+          label: '产地:罗家巷子'
+        },
+        {
+          src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584191214702&di=d330763a4c2d9173eaac684f3e4ea392&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg',
+          title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+          price: 1000,
+          paymentNum: 10000,
+          label: '产地:罗家巷子'
+        },
+        {
+          src: '',
+          title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+          price: 100,
+          paymentNum: 10000,
+          label: '产地:罗家巷子'
+        }
+      ]
     }
   },
+  mounted() {
+  },
   methods: {
+    onCardHandle(record) {
+      console.log(record)
+    },
     refresh() {
       let _that = this
       setTimeout(() => {
@@ -39,28 +95,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .top{
-    width: 100%;
-    height: 300px;
-    background: #dedede;
+  .label{
+    margin-top: .5rem;
   }
 .container {
-  background: dodgerblue;
-  margin: 0 auto;
   min-height: 100vh;
-  height: 1000px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  .title {
-    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    display: block;
-    font-weight: 400;
-    font-size: 5rem;
-    color: #FF8000;
-    letter-spacing: 1px;
+  padding: 0 3% 3%;
+  justify-content: space-between;
+  .container-left, .container-right{
+    width: 48.5%;
+  }
+  .card{
+    margin-top: 5%;
   }
 }
 </style>
