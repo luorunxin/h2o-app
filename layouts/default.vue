@@ -1,9 +1,28 @@
 <template>
   <div>
     <nuxt />
+    <van-tabbar bind:change="onChange">
+      <van-tabbar-item to="/home" name="home" icon="home-o">首页</van-tabbar-item>
+      <van-tabbar-item to="/service" name="search" icon="search">客服</van-tabbar-item>
+      <van-tabbar-item to="/information" name="friends" icon="friends-o">信息</van-tabbar-item>
+      <van-tabbar-item to="/my" name="setting" icon="setting-o">我的</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
-
+<script>
+  export default {
+    data() {
+      return {
+        active: 'home'
+      }
+    },
+   methods:{
+      onchange(event) {
+        alert(1)
+     }
+   }
+  }
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
