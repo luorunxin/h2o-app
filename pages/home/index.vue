@@ -23,25 +23,101 @@
       </van-grid>
     </div>
     <div class="ad">
-      广告
+      <div class="banner">广告</div>
     </div>
-    <div class="page">
-      <div>
-        <van-tabs animated bind:change="onChange">
-          <van-tab title="最新">最新</van-tab>
-          <van-tab title="最火">最火</van-tab>
-          <van-tab title="推荐">推荐</van-tab>
-        </van-tabs>
+  </div>
+  <div class="page">
+    <l-refresh
+      ref="refresh"
+      @refresh="refresh"
+    >
+      <div class="container">
+        <div class="container-left">
+          <l-card
+            class="card"
+            v-for="(item, index) in list"
+            v-if="index%2 == 0"
+            :key="index"
+            :record="item"
+            @onCardHandle="onCardHandle"
+          >
+            <l-label class="label" :label="item.label" />
+          </l-card>
+        </div>
+        <div class="container-right">
+          <l-card
+            class="card"
+            v-for="(item, index) in list"
+            v-if="index%2 != 0"
+            :key="index"
+            :record="item"
+            @onCardHandle="onCardHandle"
+          >
+            <l-label class="label" :label="item.label" />
+          </l-card>
+        </div>
       </div>
-      <div></div>
-    </div>
+    </l-refresh>
   </div>
 </div>
 </template>
 
 <script>
+  import LRefresh from '~/components/l-refresh'
+  import LCard from '~/components/l-card'
+  import LLabel from '~/components/l-label'
   export default {
-    name: "index"
+    name: "index",
+    components: {
+      LRefresh,
+      LCard,
+      LLabel
+    },
+    data() {
+      return {
+        list: [
+          {
+            src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584191214702&di=d330763a4c2d9173eaac684f3e4ea392&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg',
+            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+            price: 1000,
+            paymentNum: 10000,
+            label: '产地:罗家巷子'
+          },
+          {
+            src: '',
+            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+            price: 100,
+            paymentNum: 10000,
+            label: '产地:罗家巷子'
+          },
+          {
+            src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584191214702&di=d330763a4c2d9173eaac684f3e4ea392&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg',
+            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+            price: 1000,
+            paymentNum: 10000,
+            label: '产地:罗家巷子'
+          },
+          {
+            src: '',
+            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
+            price: 100,
+            paymentNum: 10000,
+            label: '产地:罗家巷子'
+          }
+        ]
+      }
+    },
+    methods: {
+      onCardHandle(record) {
+        console.log(record)
+      },
+      refresh() {
+        let _that = this
+        setTimeout(() => {
+          _that.$refs['refresh'].refreshComplete()
+        }, 2000)
+      }
+    }
   }
 </script>
 
@@ -64,13 +140,27 @@
   }
 }
   .ad {
-    height: 10rem;
-    background: #FF8000;
-    margin: 2rem 1.5rem;
+    padding: 2rem 1.5rem;
+    .banner{
+      height: 10rem;
+      background: #FF8000;
+    }
   }
   .page {
-    display: grid;
-    grid-template-rows: 100%;
-    grid-template-columns: 70% 30%;
+    padding-bottom: 50px;
+    .container{
+      display: flex;
+      padding: .2rem 3% 3%;
+      justify-content: space-between;
+      .container-left, .container-right{
+        width: 48.5%;
+      }
+      .card{
+        margin-bottom: 5%;
+      }
+      .label{
+        margin-top: .5rem;
+      }
+    }
   }
 </style>

@@ -35,7 +35,7 @@
     props: {
       maxY: {
         type: Number,
-        default: 60
+        default: 80
       },
     },
     watch: {
@@ -44,6 +44,11 @@
       document.addEventListener('touchstart',this.touchStart,false);
       document.addEventListener('touchmove',this.touchMove,{passive: false});
       document.body.addEventListener('touchend',this.touchEnd,false);
+    },
+    destroyed() {
+      document.removeEventListener('touchstart',this.touchStart,false);
+      document.removeEventListener('touchmove',this.touchMove,{passive: false});
+      document.body.removeEventListener('touchend',this.touchEnd,false);
     },
     methods: {
       refreshComplete() {
@@ -138,7 +143,7 @@
       font-size: 1.2rem;
       text-align: center;
       z-index: 9999;
-      transform: translateY(-100%);
+      transform: translateY(-180%);
       .start{
         display: flex;
         align-items: center;
