@@ -1,11 +1,17 @@
 <template>
   <div>
     <nuxt />
-    <van-tabbar bind:change="onChange">
-      <van-tabbar-item to="/home" name="home" icon="home-o">首页</van-tabbar-item>
-      <van-tabbar-item to="/service" name="search" icon="search">客服</van-tabbar-item>
-      <van-tabbar-item to="/information" name="friends" icon="friends-o">信息</van-tabbar-item>
-      <van-tabbar-item to="/my" name="setting" icon="setting-o">我的</van-tabbar-item>
+<!--    <van-tabbar :active="active">-->
+<!--      <van-tabbar-item name="home" icon="home-o" to="/home">首页</van-tabbar-item>-->
+<!--      <van-tabbar-item name="service" icon="search" to="/service">客服</van-tabbar-item>-->
+<!--      <van-tabbar-item name="information" icon="friends-o" to="/information">信息</van-tabbar-item>-->
+<!--      <van-tabbar-item name="my" icon="setting-o" to="/my">我的</van-tabbar-item>-->
+<!--    </van-tabbar>-->
+    <van-tabbar v-model="active">
+      <van-tabbar-item name="home" icon="home-o" to="/home">标签</van-tabbar-item>
+      <van-tabbar-item name="service" icon="search" to="/service">标签</van-tabbar-item>
+      <van-tabbar-item name="information" icon="friends-o" to="/information">标签</van-tabbar-item>
+      <van-tabbar-item name="my" icon="setting-o" to="/my">标签</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -13,13 +19,11 @@
   export default {
     data() {
       return {
-        active: 'home'
+        active: 'home',
       }
     },
    methods:{
-      onchange(event) {
-        alert(1)
-     }
+
    }
   }
 </script>

@@ -89,7 +89,6 @@
           this.moveTrue = true
           this.$refs['l_refresh'].style.transform = `translateY(${this.moveY}px)`
         }
-        console.log(this.state)
       },
       touchEnd(e) {
 
