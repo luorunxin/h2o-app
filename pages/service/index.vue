@@ -17,6 +17,8 @@
       </div>
     </div>
   </div>
+  <van-field v-model="msg" placeholder="请输入..." />
+  <van-button @click="send(msg)" type="primary">发送</van-button>
 </div>
 </template>
 
@@ -25,21 +27,25 @@
     name: "index",
     data() {
       return {
-        socket: null
+        socket: null,
+        token: '',
+        msg: '',
+        timer: null
       }
     },
     mounted() {
+      this.token = parseInt(Math.random()*100000) + new Date().getTime()
       this.initWebSocket()
+    },
+    beforeDestroy() {
+      this.close()
     },
     methods: {
       initWebSocket() {
-        if (window.WebSocket){
-          let address = 'ws://192.168.0.103:3001/'
+        if (window.WebSocket || window.MozWebSocket){
+          let address = 'ws://192.168.0.103:3001/service'
           this.socket = new WebSocket(address)
           this.open()
-          this.send('1111')
-          this.message()
-          // this.close()
         }else{
           this.$toast('当前客户端不支持此功能')
           this.$router.go(-1)
@@ -48,12 +54,19 @@
       open() {
         console.log('正在连接...')
         this.socket.onopen = () => {
+          this.send()
           this.message()
+          this.setIntervalSend()
         }
       },
       send(data) {
-        if(!data || this.socket.readyState != 1) return
-        this.socket.send(data)
+        if(this.socket.readyState != 1) return
+        let obj = {
+          token: this.token
+        }
+        if(data) obj.message = data
+        this.socket.send(JSON.stringify(obj))
+        this.msg = ''
       },
       message() {
         this.socket.onmessage = function (msg) {
@@ -61,9 +74,16 @@
         }
       },
       close() {
-        this.socket.onclose = function (event) {
-          console.log('连接关闭:',event)
+        this.socket.close()
+        this.socket.onclose = function () {
+          console.log('连接关闭')
+          clearInterval(this.timer)
         }
+      },
+      setIntervalSend() {
+        this.timer = setInterval(() => {
+          this.socket.send('791618513')
+        }, 5000)
       },
       order() {
         this.$router.push({
