@@ -19,6 +19,9 @@
   </div>
   <van-field v-model="msg" placeholder="请输入..." />
   <van-button @click="send(msg)" type="primary">发送</van-button>
+  <div class="contactService">
+    <van-button size="large" type="info" @click="help($event)">联系客服</van-button>
+  </div>
 </div>
 </template>
 
@@ -91,6 +94,15 @@
           query:{
             id:'1',
             msg: '订单疑问'
+          }
+        })
+      },
+      help(event) {
+        this.$router.push({
+          path:'/service/serviceHelp',
+          query: {
+            id:'1',
+            msg:'用户名'
           }
         })
       }
@@ -175,6 +187,11 @@
         }
       }
     }
+  }
+  .contactService {
+    /*width: 80%;*/
+    padding: 3%;
+    margin-top: 50%;
   }
 }
 </style>
