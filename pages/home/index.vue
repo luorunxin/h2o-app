@@ -23,7 +23,14 @@
       </van-grid>
     </div>
     <div class="ad">
-      <div class="banner">广告</div>
+      <div>
+        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+          <van-swipe-item>1</van-swipe-item>
+          <van-swipe-item>2</van-swipe-item>
+          <van-swipe-item>3</van-swipe-item>
+          <van-swipe-item>4</van-swipe-item>
+        </van-swipe>
+      </div>
     </div>
   </div>
   <div class="page">
@@ -140,14 +147,16 @@
   }
 }
   .ad {
-    padding: 2rem 1.5rem;
-    .banner{
-      height: 10rem;
-      background: #FF8000;
+    padding: 3%;
+    .my-swipe .van-swipe-item {
+      color: #fff;
+      font-size: 20px;
+      line-height: 150px;
+      text-align: center;
+      background-color: #39a9ed;
     }
   }
   .page {
-    padding-bottom: 50px;
     .container{
       display: flex;
       padding: .2rem 3% 3%;
@@ -162,5 +171,10 @@
         margin-top: .5rem;
       }
     }
+  }
+  .search {
+    position: sticky;
+    top: 0;
+    z-index: 999;
   }
 </style>

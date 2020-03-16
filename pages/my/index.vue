@@ -18,44 +18,35 @@
       </div>
     </div>
     <div class="myCentent">
-      <div class="orderDetails">
-        <div>我的订单</div>
-        <div></div>
-        <div>查看全部订单></div>
-      </div>
-      <div class="DataList">
-        <div class="single" v-for="(item,index) in orderInformation" :key="index">
-          <div class="orderIcon">
-            <van-icon class="icon" color="#ff8000" :name="item.icon" size="2.5rem"/>
-            <div class="orderMsg">{{ item.orderMsg }}</div>
+      <l-panel-card
+        class="panel-card"
+        v-for="(item, index) in panelCardDataList"
+        :key="index"
+        :record="item.record"
+        @onPanelCardHandle="onPanelCardHandle"
+      >
+        <div class="DataList">
+          <div class="single" v-for="(it,ind) in item.buttons" :key="ind">
+            <div class="orderIcon">
+              <van-icon class="icon" color="#ff8000" :name="it.icon" size="2.5rem"/>
+              <div class="orderMsg">{{ it.text }}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="LogisticsInformation">
-        <div class="LogisticsInformationTop">
-          <div>最新物流</div>
-          <div>03-11</div>
-        </div>
-        <div class="LogisticsInformationBottom">
-          <div class="productPicture">图片</div>
-          <div class="LogisticsStatus">
-            <div><van-icon name="completed" /> 已发货</div>
-            <div>包裹正在等待揽收</div>
+        <div class="LogisticsInformation" v-if="index == 0">
+          <div class="LogisticsInformationTop">
+            <div>最新物流</div>
+            <div>03-11</div>
+          </div>
+          <div class="LogisticsInformationBottom">
+            <div class="productPicture">图片</div>
+            <div class="LogisticsStatus">
+              <div><van-icon name="completed" /> 已发货</div>
+              <div>包裹正在等待揽收</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="myBottom">
-      <div class="toolTop">
-        <div>必备工具</div>
-        <div>查看全部工具></div>
-      </div>
-      <div class="toolBottom">
-        <div class="toolData" v-for="(item,index) in tool" :key="index">
-          <div class="toolIcon"></div>
-          <div>{{ item.toolMsg }}</div>
-        </div>
-      </div>
+      </l-panel-card>
     </div>
   </div>
 </template>
@@ -70,32 +61,56 @@
     },
     data() {
       return {
-        orderInformation: [
-          {icon: 'credit-pay', orderMsg: '待付款'},
-          {icon:'paid', orderMsg: '待发货'},
-          {icon:'logistics',orderMsg: '待收货'},
-          {icon: 'records',orderMsg: '评价'},
-          {icon: 'balance-pay',orderMsg: '退款/售后'}
+        panelCardDataList: [
+          {
+            record: {
+              title: '我的订单',
+              arrowTitle: '查看全部订单'
+            },
+            buttons: [
+              {icon: 'credit-pay', text: '待付款'},
+              {icon:'paid', text: '待发货'},
+              {icon:'logistics',text: '待收货'},
+              {icon: 'records',text: '评价'},
+              {icon: 'balance-pay',text: '退款/售后'}
+            ],
+          },
+          {
+            record: {
+              title: '必备工具',
+              arrowTitle: '查看全部工具'
+            },
+            buttons:[
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+              {icon:'',text:'每日返现'},
+            ]
+          }
         ],
-        tool:[
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-          {img:'',toolMsg:'每日返现'},
-        ]
       }
     },
-    methods: {}
+    methods: {
+      onPanelCardHandle(record) {
+        switch (record.title) {
+          case '我的订单':
+            this.$toast('跳转我的订单')
+            break;
+          case '必备工具':
+            this.$toast('跳转必备工具')
+            break;
+        }
+      }
+    }
   }
 </script>
 
 <style scoped lang="scss">
   .my {
-    background-color: #fff;
     .myTop {
       .one {
         text-align: right;
@@ -140,19 +155,8 @@
     .myCentent {
       padding: 0 1rem;
       margin-bottom: 1rem;
-      .orderDetails {
-        display: flex;
-        justify-content: space-between;
-        padding: 3%;
-
-        div:nth-child(1) {
-          font-size: 1.3rem;
-          font-weight: 500;
-        }
-
-        div:nth-child(2) {
-          color: #e0e0e0;
-        }
+      .panel-card{
+        margin-top: 5%;
       }
       .DataList {
         /*height: 50%;*/
@@ -212,47 +216,6 @@
             div:nth-child(2) {
               color: #a9a9a9;
             }
-          }
-        }
-      }
-    }
-    .myBottom {
-      display: grid;
-      grid-template-rows: 20% 80%;
-      grid-template-columns: 100%;
-      .toolTop {
-        display: grid;
-        grid-template-rows: 100%;
-        grid-template-columns: repeat(2,20%);
-        justify-content: space-between;
-        align-content: center;
-        align-items: center;
-        padding: 1rem;
-        div:nth-child(1) {
-          font-size: 1.5rem;
-        }
-        div:nth-child(2) {
-          color: #cccccc;
-        }
-      }
-      .toolBottom {
-        display: grid;
-        grid-template-rows: repeat(2,50%);
-        grid-template-columns: repeat(4,25%);
-        justify-content: space-between;
-        justify-items: center;
-        .toolData {
-          display: grid;
-          grid-template-rows: repeat(2,50%);
-          grid-template-columns: 100%;
-          justify-content: space-between;
-          justify-items: center;
-          .toolIcon {
-            background-color: red;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            margin-bottom: 2.5rem;
           }
         }
       }

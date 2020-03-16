@@ -19,7 +19,7 @@
     props: ['record'],
     methods: {
       panelCardHandle() {
-        this.$emit('onPanelCardHandle')
+        this.$emit('onPanelCardHandle', this.record)
       }
     }
   }

@@ -1,12 +1,6 @@
 <template>
   <div>
-    <nuxt />
-<!--    <van-tabbar :active="active">-->
-<!--      <van-tabbar-item name="home" icon="home-o" to="/home">首页</van-tabbar-item>-->
-<!--      <van-tabbar-item name="service" icon="search" to="/service">客服</van-tabbar-item>-->
-<!--      <van-tabbar-item name="information" icon="friends-o" to="/information">信息</van-tabbar-item>-->
-<!--      <van-tabbar-item name="my" icon="setting-o" to="/my">我的</van-tabbar-item>-->
-<!--    </van-tabbar>-->
+    <nuxt class="nuxt-box" />
     <van-tabbar v-model="active">
       <van-tabbar-item name="home" icon="home-o" to="/home">标签</van-tabbar-item>
       <van-tabbar-item name="service" icon="search" to="/service">标签</van-tabbar-item>
@@ -28,6 +22,9 @@
   }
 </script>
 <style>
+  .nuxt-box{
+    padding-bottom: 50px;
+  }
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
