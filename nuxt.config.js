@@ -32,7 +32,10 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vant-ui',
-    '@/plugins/filters'
+    '@/plugins/filters',
+    '@/plugins/baseURL',
+    '@/plugins/axios',
+    '@/plugins/ajax',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -43,7 +46,20 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios'
   ],
+  axios: {
+    prefix: '/h2o/',
+    proxy: true
+  },
+  proxy: {
+    '/h2o/': {
+      target: 'http://127.0.0.1:3000',
+      pathRewrite: {
+        '^/h2o/': ''
+      }
+    }
+  },
   /*
   ** Build configuration
   */
