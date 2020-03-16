@@ -55,6 +55,7 @@
   import LPanelCard from '~/components/l-panel-card'
 
   export default {
+    layout: 'tabbar',
     name: "index",
     components: {
       LPanelCard

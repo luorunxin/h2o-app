@@ -6,6 +6,7 @@
 
 <script>
   export default {
+    layout: 'tabbar',
     name: "index"
   }
 </script>

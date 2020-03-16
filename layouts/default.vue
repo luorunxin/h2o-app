@@ -1,25 +1,16 @@
 <template>
   <div>
     <nuxt class="nuxt-box" />
-    <van-tabbar v-model="active">
-      <van-tabbar-item name="home" icon="home-o" to="/home">标签</van-tabbar-item>
-      <van-tabbar-item name="service" icon="search" to="/service">标签</van-tabbar-item>
-      <van-tabbar-item name="information" icon="friends-o" to="/information">标签</van-tabbar-item>
-      <van-tabbar-item name="my" icon="setting-o" to="/my">标签</van-tabbar-item>
-    </van-tabbar>
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        active: 'home',
-      }
-    },
-   methods:{
+export default {
+  data() {
+    return {
 
-   }
+    }
   }
+}
 </script>
 <style>
   .nuxt-box{

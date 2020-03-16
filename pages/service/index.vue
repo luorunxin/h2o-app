@@ -27,6 +27,7 @@
 
 <script>
   export default {
+    layout: 'tabbar',
     name: "index",
     data() {
       return {

@@ -74,6 +74,7 @@
   import LCard from '~/components/l-card'
   import LLabel from '~/components/l-label'
   export default {
+    layout: 'tabbar',
     name: "index",
     components: {
       LRefresh,
