@@ -17,10 +17,8 @@
       </div>
     </div>
   </div>
-  <van-field v-model="msg" placeholder="请输入..." />
-  <van-button @click="send(msg)" type="primary">发送</van-button>
   <div class="contactService">
-    <van-button size="large" type="info" @click="help($event)">联系客服</van-button>
+    <van-button class="button" size="large" type="info" @click="help($event)">联系客服</van-button>
   </div>
 </div>
 </template>
@@ -33,7 +31,6 @@
       return {
         socket: null,
         token: '',
-        msg: '',
         timer: null
       }
     },
@@ -190,9 +187,13 @@
     }
   }
   .contactService {
-    /*width: 80%;*/
+    width: 100%;
     padding: 3%;
-    margin-top: 50%;
+    position: absolute;
+    bottom: 50px;
+    .button{
+      border-radius: .5rem;
+    }
   }
 }
 </style>
