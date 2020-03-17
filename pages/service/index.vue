@@ -29,63 +29,9 @@
     name: "index",
     data() {
       return {
-        socket: null,
-        token: '',
-        timer: null
       }
     },
-    mounted() {
-      this.token = parseInt(Math.random()*100000) + new Date().getTime()
-      this.initWebSocket()
-    },
-    beforeDestroy() {
-      this.close()
-    },
     methods: {
-      initWebSocket() {
-        if (window.WebSocket || window.MozWebSocket){
-          let address = 'ws://192.168.0.103:3001/service'
-          this.socket = new WebSocket(address)
-          this.open()
-        }else{
-          this.$toast('当前客户端不支持此功能')
-          this.$router.go(-1)
-        }
-      },
-      open() {
-        console.log('正在连接...')
-        this.socket.onopen = () => {
-          this.send()
-          this.message()
-          this.setIntervalSend()
-        }
-      },
-      send(data) {
-        if(this.socket.readyState != 1) return
-        let obj = {
-          token: this.token
-        }
-        if(data) obj.message = data
-        this.socket.send(JSON.stringify(obj))
-        this.msg = ''
-      },
-      message() {
-        this.socket.onmessage = function (msg) {
-          console.log(msg.data)
-        }
-      },
-      close() {
-        this.socket.close()
-        this.socket.onclose = function () {
-          console.log('连接关闭')
-          clearInterval(this.timer)
-        }
-      },
-      setIntervalSend() {
-        this.timer = setInterval(() => {
-          this.socket.send('791618513')
-        }, 5000)
-      },
       order() {
         this.$router.push({
           path:'/service/order',
