@@ -10,16 +10,14 @@
       @onSubstrctHandle="onSubstrctHandle"
       @onPlusHandle="onPlusHandle"
     >
-      <div v-if="index%2 == 0" style="font-size: 1.5rem;color: dodgerblue;">
-        这里可以支持插槽，你可以随便放数据
-      </div>
+
     </l-shopping-cart-card>
     <van-submit-bar
-      :price="sumAll"
+      :price="sum"
       button-text="提交订单"
       @submit="onSubmit"
     >
-      <van-checkbox v-model="checked" checked-color="#ff8000" @click="selectAll">全选</van-checkbox>
+      <van-checkbox checked-color="#ff8000" @click="selectAll"  v-model="checked">全选</van-checkbox>
     </van-submit-bar>
   </div>
 </template>
@@ -34,9 +32,11 @@
     },
     data() {
       return {
+        checked: false,
+        sum:0,
         datas: [
           {
-            checked: true,
+            checked: false,
             src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
             title: '测试数据标题',
             price: 199,
@@ -46,13 +46,10 @@
             checked: false,
             src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
             title: '测试数据标题',
-            price: 199,
+            price: 99,
             num: 1
           }
         ],
-        checked: true,
-        sum:null,
-        sumAll:0
       }
     },
     mounted() {
@@ -60,12 +57,12 @@
     },
     methods: {
       selectAll() {
-        if (!this.checked) {
-          for (let i=0;i<this.datas.length;i++) {
+        this.sum = 0
+        for(let i in this.datas){
+          if(!this.checked) {
             this.datas[i].checked = true
-          }
-        } else {
-          for (let i=0;i<this.datas.length;i++) {
+            this.sum += this.datas[i].price * 100
+          }else{
             this.datas[i].checked = false
           }
         }
@@ -82,7 +79,22 @@
       },
       // 点击复选框触发
       onChangeCheck(record) {
-        console.log(JSON.stringify(record, null, 2))
+        if(record.checked){
+          this.sum += record.price * 100
+        }else{
+          this.sum -= record.price * 100
+        }
+        let flag = false
+        this.datas.forEach(item => {
+          if(!item.checked) {
+            flag = true
+          }
+        })
+        if(flag) {
+          this.checked = false
+        }else{
+          this.checked = true
+        }
       },
       // 点击卡片任意地方（不包括卡片内的按钮）触发
       onShoppingHandle(record) {
@@ -90,11 +102,15 @@
       },
       // 点击减号触发
       onSubstrctHandle(record) {
-        console.log(JSON.stringify(record, null, 2))
+        if(record.checked){
+          this.sum -= record.price*record.num *100
+        }
       },
       //点击加号触发
       onPlusHandle(record) {
-        console.log(JSON.stringify(record, null, 2))
+        if(record.checked){
+          this.sum += record.price*record.num *100
+        }
       }
     }
   }

@@ -43,18 +43,15 @@
         this.$emit('onChangeCheck', this.record)
       },
       shoppingHandle() {
-        this.record.priceAll = (this.record.price*this.record.num).toFixed(2)
         this.$emit('onShoppingHandle', this.record)
       },
       substrctHandle() {
         if(this.record.num == 1) return this.$toast('宝贝不能再减了')
         this.record.num = parseInt(this.record.num) - 1
-        this.record.priceAll = (this.record.price*this.record.num).toFixed(2)
         this.$emit('onSubstrctHandle', this.record)
       },
       plusHandle() {
         this.record.num = parseInt(this.record.num) + 1
-        this.record.priceAll = (this.record.price*this.record.num).toFixed(2)
         this.$emit('onPlusHandle', this.record)
       }
     }
