@@ -27,10 +27,14 @@
 
 <style lang="scss" scoped>
   .l-dialog-container{
-    width: 100%;
+    display: inline-block;
+    word-break: break-all;
+    &>div{
+      min-height: 4rem;
+    }
     .l-dialog-left{
       padding: 1rem;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       background-color: rgba(0,0,0,0.5);
       border-radius: 0.5rem;
       position: relative;
@@ -43,7 +47,7 @@
         border-style: solid;
         border-color: transparent white transparent transparent;
         left: -1.2rem;
-        top: 1.2rem;
+        top: 1.5rem;
       }
     }
     .l-dialog-right{
@@ -61,7 +65,7 @@
         border-style: solid;
         border-color: transparent transparent transparent white;
         left: 100%;
-        top: 1.2rem;
+        top: 1.5rem;
       }
     }
   }

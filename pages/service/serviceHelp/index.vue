@@ -10,49 +10,52 @@
       </div>
     </div>
     <div class="withCenter" ref="talk">
-      <div class="single-left" v-for="item in 10">
-        <div class="head-photo">
-          <div></div>
-        </div>
-        <div class="dialog">
-          <l-dialog :left="true" :text="'打开就是不了四个 iu 的撒'" />
-        </div>
-        <div class="covering"></div>
-      </div>
-      <div class="single-right" v-for="item in 10">
-        <div class="covering"></div>
-        <div class="dialog">
-          <l-dialog :left="false" :text="'打开就是不了四个 iu 的撒'" />
-        </div>
-        <div class="head-photo">
-          <div></div>
-        </div>
-      </div>
+      <component
+        v-for="(item, index) in talkContent"
+        :key="index"
+        :is="item.name"
+        :text="item.text"
+      />
     </div>
     <div class="input-group" ref="input">
-      <div class="text">
-        <textarea></textarea>
-      </div>
-      <button class="l-button">发送</button>
+      <l-textarea
+        v-model="textareaVal"
+      />
+      <button class="l-button" @click.stop="sendtext">发送</button>
     </div>
   </div>
 </template>
 
 <script>
-  import LDialog from '~/components/l-dialog'
+  import LTextarea from '~/components/l-textarea'
+  import LTalkLeft from '~/components/l-talk-left'
+  import LTalkRight from '~/components/l-talk-right'
+  import BASEURL from '~/plugins/baseURL.js'
   export default {
     name: "index",
     components: {
-      LDialog
+      LTextarea,
+      LTalkLeft,
+      LTalkRight
     },
     data() {
       return {
+        talkContent: [],
+        textareaVal: '',
         msg:'',
         beforeHeight: 0,
         stop: 0,
+        socket: null,
+        token: '',
+        timer: null
       }
     },
+    created() {
+      this.msg = this.$route.query.msg
+    },
     mounted() {
+      this.token = parseInt(Math.random()*100000).toString() + new Date().getTime()
+      this.initWebSocket()
       let _this = this
       //下面的这代码是猎取当前屏幕可视取的高度
       this.beforeHeight = document.documentElement.clientHeight || document.body.clientHeight
@@ -71,14 +74,70 @@
         }
       }
     },
+    beforeDestroy() {
+      this.close()
+    },
     methods: {
+      initWebSocket() {
+        if (window.WebSocket || window.MozWebSocket){
+          let address = BASEURL.socket + '/service'
+          this.socket = new WebSocket(address)
+          this.open()
+        }else{
+          this.$toast('当前客户端不支持此功能')
+          this.$router.go(-1)
+        }
+      },
+      open() {
+        console.log('正在连接...')
+        this.socket.onopen = () => {
+          this.send()
+          this.message()
+          this.setIntervalSend()
+        }
+      },
+      send(data) {
+        if(this.socket.readyState != 1) return
+        let obj = {
+          token: this.token
+        }
+        if(data) obj.message = data
+        this.socket.send(JSON.stringify(obj))
+      },
+      message() {
+        let _this = this
+        this.socket.onmessage = function (msg) {
+          _this.talkContent.push({
+            name: 'l-talk-left',
+            text: msg.data
+          })
+        }
+      },
+      close() {
+        this.socket.close()
+        this.socket.onclose = function () {
+          console.log('连接关闭')
+          clearInterval(this.timer)
+        }
+      },
+      setIntervalSend() {
+        this.timer = setInterval(() => {
+          this.socket.send('791618513')
+        }, 5000)
+      },
+      sendtext() {
+        if(!this.textareaVal) return
+        this.send(this.textareaVal)
+        this.talkContent.push({
+          name: 'l-talk-right',
+          text: this.textareaVal
+        })
+        this.textareaVal = ''
+      },
       back() {
         this.$router.go(-1)
       }
     },
-    created() {
-      this.msg = this.$route.query.msg
-    }
   }
 </script>
 
@@ -115,61 +174,25 @@
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
     overflow-y: scroll;
-    .single-left{
-      display: flex;
-      margin-bottom: 5%;
-    }
-    .single-right{
-      display: flex;
-      margin-bottom: 5%;
-      .head-photo{
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-    .head-photo{
-      flex: 1;
-      &>div{
-        width: 4rem;
-        height: 4rem;
-        background: dodgerblue;
-        border-radius: .5rem;
-      }
-    }
-    .dialog{
-      flex: 4.3;
-    }
-    .covering{
-      flex: 1;
-    }
+
   }
   .input-group{
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    min-height: 60px;
     border-top: 1px solid #dadada;
     display: flex;
-    align-items: center;
-    .text{
-      width: 100%;
-      padding: 1rem;
-      textarea{
-        list-style: none;
-        width: 100%;
-        height: 36px;
-        padding: 1rem;
-        font-size: 1.4rem;
-        resize: none;
-        outline: none;
-        border: none;
-        border-radius: .5rem;
-      }
-    }
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #f1f1f1;
+
     .l-button{
+      height: calc(60px - 2rem);
       list-style: none;
-      padding: .5rem 1.2rem;
+      padding: 0 1.2rem;
       border: 1px solid #dadada;
       border-radius: .5rem;
       font-size: 1.4rem;
@@ -177,7 +200,6 @@
       color: white;
       font-weight: 500;
       white-space: nowrap;
-      margin-right: 1rem;
     }
   }
 }
