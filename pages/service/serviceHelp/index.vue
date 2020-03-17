@@ -49,12 +49,14 @@
       return {
         msg:'',
         beforeHeight: 0,
+        stop: 0,
       }
     },
     mounted() {
       let _this = this
       //下面的这代码是猎取当前屏幕可视取的高度
       this.beforeHeight = document.documentElement.clientHeight || document.body.clientHeight
+      this.stop = this.$refs['talk'].scrollHeight
       //点击当前窗口任意地方的时候调用这个函数
       window.onresize = function () {
         //把当前的高度保存到一个变量里面
@@ -62,10 +64,10 @@
         //判断最开始保存的变量和后面点击窗口后保存的变量判断后进行元素的位置改变
         if(_this.beforeHeight > afterHeight){
           _this.$refs['input'].style.bottom = `0px`
-          _this.$refs['talk'].style.bottom = `0px`
+          _this.$refs['talk'].scrollTop = _this.beforeHeight - afterHeight + _this.stop
         }else{
           _this.$refs['talk'].style.bottom = '0'
-          _this.$refs['input'].style.bottom = '0'
+          _this.$refs['input'].scrollTop = _this.stop
         }
       }
     },
@@ -112,7 +114,7 @@
     -moz-overflow-scrolling: touch;
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
-    overflow:auto;
+    overflow-y: scroll;
     .single-left{
       display: flex;
       margin-bottom: 5%;
