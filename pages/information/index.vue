@@ -14,6 +14,13 @@
         这里可以支持插槽，你可以随便放数据
       </div>
     </l-shopping-cart-card>
+    <van-submit-bar
+      :price="sumAll"
+      button-text="提交订单"
+      @submit="onSubmit"
+    >
+      <van-checkbox v-model="checked" checked-color="#ff8000" @click="selectAll">全选</van-checkbox>
+    </van-submit-bar>
   </div>
 </template>
 
@@ -29,23 +36,50 @@
       return {
         datas: [
           {
-            checked: false,
-            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
-            title: '测试数据标题',
-            price: 199.99,
-            num: 1
-          },
-          {
             checked: true,
             src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
             title: '测试数据标题',
-            price: 199.99,
-            num: 99
+            price: 199,
+            num: 1
+          },
+          {
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 199,
+            num: 1
           }
-        ]
+        ],
+        checked: true,
+        sum:null,
+        sumAll:0
       }
     },
+    mounted() {
+      this.on()
+    },
     methods: {
+      selectAll() {
+        if (!this.checked) {
+          for (let i=0;i<this.datas.length;i++) {
+            this.datas[i].checked = true
+          }
+        } else {
+          for (let i=0;i<this.datas.length;i++) {
+            this.datas[i].checked = false
+          }
+        }
+      },
+      onSubmit() {
+        console.log('我是提交')
+      },
+      on() {
+        for (let i=0;i<this.datas.length;i++) {
+          if (!this.datas[i].checked) {
+            return this.checked = false
+          }
+        }
+      },
       // 点击复选框触发
       onChangeCheck(record) {
         console.log(JSON.stringify(record, null, 2))
