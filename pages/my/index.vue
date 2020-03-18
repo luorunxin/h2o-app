@@ -99,7 +99,9 @@
       onPanelCardHandle(record) {
         switch (record.title) {
           case '我的订单':
-            this.$toast('跳转我的订单')
+            this.$router.push({
+              path:'/my/allOrders'
+            })
             break;
           case '必备工具':
             this.$toast('跳转必备工具')
