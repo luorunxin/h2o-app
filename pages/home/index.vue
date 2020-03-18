@@ -39,7 +39,8 @@
       @refresh="refresh"
     >
       <div class="container">
-        <div class="container-left">
+        <div class="container-left"  @click="JumpDetails"
+        >
           <l-card
             class="card"
             v-for="(item, index) in list"
@@ -51,7 +52,7 @@
             <l-label class="label" :label="item.label" />
           </l-card>
         </div>
-        <div class="container-right">
+        <div class="container-right" @click="JumpDetails">
           <l-card
             class="card"
             v-for="(item, index) in list"
@@ -116,6 +117,16 @@
       }
     },
     methods: {
+      JumpDetails() {
+        this.$router.push({
+          path:'/home/Details',
+          query: {
+            id:'1',
+            name:'我是跳转来的'
+          }
+        })
+      },
+
       onCardHandle(record) {
         console.log(record)
       },

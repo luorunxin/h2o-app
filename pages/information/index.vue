@@ -36,6 +36,7 @@
         sum:0,
         datas: [
           {
+            id: 1,
             checked: false,
             src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
             title: '测试数据标题',
@@ -43,6 +44,7 @@
             num: 1
           },
           {
+            id: 2,
             checked: false,
             src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
             title: '测试数据标题',
@@ -61,7 +63,7 @@
         for(let i in this.datas){
           if(!this.checked) {
             this.datas[i].checked = true
-            this.sum += this.datas[i].price * 100
+            this.sum += this.datas[i].price * this.datas[i].num * 100
           }else{
             this.datas[i].checked = false
           }
@@ -79,11 +81,7 @@
       },
       // 点击复选框触发
       onChangeCheck(record) {
-        if(record.checked){
-          this.sum += record.price * 100
-        }else{
-          this.sum -= record.price * 100
-        }
+        this.countPrice(record)
         let flag = false
         this.datas.forEach(item => {
           if(!item.checked) {
@@ -102,15 +100,20 @@
       },
       // 点击减号触发
       onSubstrctHandle(record) {
-        if(record.checked){
-          this.sum -= record.price*record.num *100
-        }
+        this.countPrice(record)
       },
       //点击加号触发
       onPlusHandle(record) {
-        if(record.checked){
-          this.sum += record.price*record.num *100
+        this.countPrice(record)
+      },
+      // 循环获取每个选中的总价
+      countPrice(record) {
+        this.sum = 0
+        for(let i in this.datas){
+          if(this.datas[i].id == record.id) continue;
+          if(this.datas[i].checked) this.sum += this.datas[i].price * this.datas[i].num * 100
         }
+        if(record.checked) this.sum += record.price * record.num * 100
       }
     }
   }
