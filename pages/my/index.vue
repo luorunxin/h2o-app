@@ -33,19 +33,6 @@
             </div>
           </div>
         </div>
-        <!--<div class="LogisticsInformation" v-if="index == 0">-->
-          <!--<div class="LogisticsInformationTop">-->
-            <!--<div>最新物流</div>-->
-            <!--<div>03-11</div>-->
-          <!--</div>-->
-          <!--<div class="LogisticsInformationBottom">-->
-            <!--<div class="productPicture">图片</div>-->
-            <!--<div class="LogisticsStatus">-->
-              <!--<div><van-icon name="completed" /> 已发货</div>-->
-              <!--<div>包裹正在等待揽收</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
       </l-panel-card>
     </div>
   </div>
@@ -82,7 +69,7 @@
               arrowTitle: '查看全部工具'
             },
             buttons:[
-              {icon:'icon-dizhi',text:'地址'},
+              {icon:'icon-dizhi',text:'我的地址'},
             ]
           }
         ],
@@ -184,47 +171,6 @@
           }
         }
       }
-      /*.LogisticsInformation {*/
-        /*font-size: 1.1rem;*/
-        /*background-color: rgba(238, 238, 238, 0.36);*/
-        /*border-radius: .7rem;*/
-        /*display: grid;*/
-        /*grid-template-rows: 30% 70%;*/
-        /*grid-template-columns: 100%;*/
-        /*padding: .7rem 0;*/
-        /*.LogisticsInformationTop {*/
-          /*display: grid;*/
-          /*grid-template-rows: 100%;*/
-          /*grid-template-columns: repeat(2,15%);*/
-          /*justify-content: space-between;*/
-          /*padding: 0 1rem;*/
-        /*}*/
-        /*.LogisticsInformationBottom {*/
-          /*display: grid;*/
-          /*grid-template-rows: 100%;*/
-          /*grid-template-columns: 20% 80%;*/
-          /*padding: .7rem 1rem;*/
-          /*.productPicture {*/
-            /*width: 5rem;*/
-            /*height: 5rem;*/
-            /*background-color: skyblue;*/
-            /*border-radius: .7rem;*/
-          /*}*/
-          /*.LogisticsStatus {*/
-            /*display: grid;*/
-            /*grid-template-rows: repeat(2,30%);*/
-            /*grid-template-columns: 100%;*/
-            /*align-content: space-between;*/
-            /*align-items: center;*/
-            /*div:nth-child(1) {*/
-              /*color: skyblue;*/
-            /*}*/
-            /*div:nth-child(2) {*/
-              /*color: #a9a9a9;*/
-            /*}*/
-          /*}*/
-        /*}*/
-      /*}*/
     }
   }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div>
-      <div class="allOrdersTop">
-        <div @click="back"><van-icon name="arrow-left" size="2rem"/></div>
-        <div><van-search v-model="value"  placeholder="请输入搜索关键词" shape="round" /></div>
-        <div><van-icon name="ellipsis" size="2rem" /></div>
+    <l-header>
+      <div slot="backRight" class="search">
+        <van-search v-model="value"  placeholder="请输入搜索关键词" shape="round" />
       </div>
+    </l-header>
     <div class="allOrdersCenter">
 
       <van-tabs  v-model="active" animated>
@@ -64,8 +64,12 @@
 </template>
 
 <script>
+  import LHeader from '~/components/l-header'
   export default {
     name: "index",
+    components: {
+      LHeader
+    },
     data() {
       return {
         value:'',
@@ -112,15 +116,15 @@
 </script>
 
 <style scoped lang="scss">
-.allOrdersTop {
-  display: grid;
-  grid-template-rows: 100%;
-  grid-template-columns: 15% 70% 15%;
-  background-color: #fff;
-  align-items: center;
-  justify-items: center;
-}
+  .search{
+    width: 200px;
+    margin-left: 2rem;
+    .van-search{
+      padding: 0;
+    }
+  }
   .allOrdersCenter {
+    padding-top: 50px;
     .ad {
       width: 90%;
       height: 6rem;

@@ -1,10 +1,10 @@
 <template>
   <div class="address">
-    <div class="addressTop">
-      <div><van-icon name="arrow-left" /></div>
-      <div>我的收货地址</div>
-      <div @click="addresss">添加收货地址</div>
-    </div>
+    <l-header
+      :title="'我的收货地址'"
+    >
+      <div class="add-address" slot="headerRight" @click="addresss">新增地址</div>
+    </l-header>
     <div class="addressCenter">
       <div class="addressList" v-for="(item,index) in addressData" :key="index">
         <div>
@@ -15,20 +15,33 @@
             <div>{{ item.phone }}</div>
           </div>
         </div>
-        <div class="addressEdit" @click="editAddress"><van-icon size="2.5rem" color="#ccc" :name="item.edit" /></div>
+        <div class="addressEdit" @click="editAddress">
+          <i :class="['iconfont', item.icon]"></i>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import LHeader from '~/components/l-header'
   export default {
     name: "index",
+    components: {
+      LHeader
+    },
     data() {
       return {
         addressData: [
           {
-            icon:'friends-o',
+            icon:'icon-bianji',
+            name:'张三',
+            phone: 14398752345,
+            address: '湖北省 孝感市 孝南区 书院街道 新铺镇 罗家巷子',
+            edit: 'records'
+          },
+          {
+            icon:'icon-bianji',
             name:'张三',
             phone: 14398752345,
             address: '湖北省 孝感市 孝南区 书院街道 新铺镇 罗家巷子',
@@ -65,43 +78,42 @@
 
 <style scoped lang="scss">
 .address {
-  .addressTop {
-    display: flex;
-    justify-content: space-between;
-    padding: 3%;
-    font-size: 1.5rem;
-    background-color: #FFFFFF;
-    div:nth-child(3) {
-      font-size: 1.2rem;
-    }
+  .add-address{
+    white-space: nowrap;
   }
   .addressCenter {
+    padding-top: 50px;
     .addressList {
-      display: grid;
-      grid-template-rows: 100%;
-      grid-template-columns: 80% 20%;
-      padding: 3%;
-      justify-items: center;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      padding: 3% 2.5rem;
       font-size: 1.3rem;
       background-color: #fff;
+      border-bottom: 1px solid #f1f1f1;
       .userAdderss {
         font-size: 1.3rem;
         font-weight: 600;
+        width: 100%;
+        padding-right: 2.5rem;
       }
       .user {
-        display: grid;
-        grid-template-rows: 100%;
-        grid-template-columns: 20% auto;
+        display: flex;
         align-items: center;
         color: #cccccc;
+        margin-top: .5rem;
         div:nth-child(1) {
           font-size: 1.2rem;
         }
         div:nth-child(2) {
           color: #cccccc;
           font-size: 1.2rem;
+          margin-left: 1rem;
         }
+      }
+      .iconfont{
+        font-size: 1.6rem;
+        color: #ccc;
       }
     }
   }

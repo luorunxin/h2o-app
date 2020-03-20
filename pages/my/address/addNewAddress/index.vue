@@ -1,9 +1,8 @@
 <template>
   <div class="addNewAddress">
-    <div class="top">
-      <div><van-icon size="2rem" name="arrow-left" color="#ccc" @click="back"/></div>
-      <div>新增地址</div>
-    </div>
+    <l-header
+      :title="'新增地址'"
+    />
     <div class="center">
       <div class="Contact-person"><van-field v-model="userData.user" label="姓名" placeholder="姓名"/></div>
       <div class="phone"><van-field v-model="userData.phone" type="tel" label="电话" placeholder="手机号"/></div>
@@ -15,8 +14,12 @@
 </template>
 
 <script>
+  import LHeader from '~/components/l-header'
   export default {
     name: "index",
+    components: {
+      LHeader
+    },
     data() {
       return {
         userData: [
@@ -54,14 +57,7 @@
 
 <style scoped lang="scss">
 .addNewAddress {
-  .top {
-    display: grid;
-    grid-template-rows: 100%;
-    grid-template-columns: 40% 50%;
-    font-size: 1.5rem;
-    padding: 3%;
-    background-color: #fff;
-  }
+  padding-top: 50px;
   .center {
     .button {
       padding: 3%;
