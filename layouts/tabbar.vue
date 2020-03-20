@@ -1,7 +1,7 @@
 <template>
   <div>
     <nuxt class="nuxt-box" />
-    <van-tabbar v-model="active" @change="changeActive">
+    <van-tabbar v-model="active">
       <van-tabbar-item name="home" icon="home-o" to="/home">首页</van-tabbar-item>
       <van-tabbar-item name="service" icon="search" to="/service">客服</van-tabbar-item>
       <van-tabbar-item name="information" icon="friends-o" to="/information">购物车</van-tabbar-item>
@@ -14,17 +14,15 @@
     name: 'tabbar',
     data() {
       return {
-        active: 'home',
+        active: ''
       }
     },
-    mounted() {
-      if(window.sessionStorage && sessionStorage.getItem('tabbarActive')){
-        this.active = sessionStorage.getItem('tabbarActive')
-      }
-    },
-    methods:{
-      changeActive() {
-        sessionStorage.setItem('tabbarActive', this.active)
+    watch: {
+      '$route': {
+        handler(to) {
+          this.active = to.name
+        },
+        immediate: true
       }
     }
   }

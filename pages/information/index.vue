@@ -50,6 +50,37 @@
             title: '测试数据标题',
             price: 99,
             num: 1
+          },
+          {
+            id: 3,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },
+          {
+            id: 4,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },
+          {
+            id: 5,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },{
+            id: 6,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
           }
         ],
       }
@@ -121,9 +152,19 @@
 
 <style lang="scss" scoped>
   .infomation{
-    padding: 3%;
+    padding: 3% 3% 0 3%;
+    height: calc(100vh - 100px);
+    -o-overflow-scrolling: touch;
+    -ms-overflow-scrolling: touch;
+    -moz-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    overflow:auto;
     .shopping-cart-card{
       margin-bottom: 3%;
+    }
+    .van-submit-bar{
+      bottom: 50px;
     }
   }
 </style>

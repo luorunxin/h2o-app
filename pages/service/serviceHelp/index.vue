@@ -1,14 +1,21 @@
 <template>
   <div class="serviceHelp">
-    <div class="withTop">
-      <div class="back">
-        <van-icon size="2rem" name="arrow-left" @click="back"/>
-        <div>{{ msg }}</div>
-      </div>
-      <div>
-        <van-icon size="2rem" name="ellipsis" />
-      </div>
-    </div>
+    <l-header
+      :fixed="false"
+      :title="msg"
+    >
+      <!--<div slot="backRight">...</div>-->
+      <!--<div slot="headerRight">...</div>-->
+    </l-header>
+    <!--<div class="withTop">-->
+      <!--<div class="back">-->
+        <!--<van-icon size="2rem" name="arrow-left" @click="back"/>-->
+        <!--<div>{{ msg }}</div>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<van-icon size="2rem" name="ellipsis" />-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="withCenter" ref="talk">
       <component
         v-for="(item, index) in talkContent"
@@ -31,12 +38,14 @@
   import LTalkLeft from '~/components/l-talk-left'
   import LTalkRight from '~/components/l-talk-right'
   import BASEURL from '~/plugins/baseURL.js'
+  import LHeader from '~/components/l-header'
   export default {
     name: "index",
     components: {
       LTextarea,
       LTalkLeft,
-      LTalkRight
+      LTalkRight,
+      LHeader
     },
     data() {
       return {

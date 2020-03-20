@@ -12,9 +12,4 @@
     recalc();
     FastClick.attach(doc.body);//解决手机浏览器点击事件300ms延迟的bug
   }, false);
-
-  // 监听手机物理返回
-  window.addEventListener('popstate', function () {
-    window.history.back()
-  }, false)
 })(document, window);
