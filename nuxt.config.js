@@ -26,7 +26,9 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    '@/assets/css/iconfont.css'
+  ],
   /*
   ** Plugins to load before mounting the App
   */
@@ -70,5 +72,8 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  router: {
+    middleware: 'beforeEach'
   }
 }

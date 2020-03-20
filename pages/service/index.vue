@@ -1,7 +1,13 @@
 <template>
 <div class="service">
+  <l-header
+    :title="'我的客服'"
+    :back="false"
+    :fixed="false"
+    :bgColor="'#ff8000'"
+    :color="'white'"
+  />
   <div class="serviceTop">
-    <div>我的客服</div>
     <div class="serviceIcon">
       <div></div>
       <div>您好,客服小e很高兴为你服务!</div>
@@ -24,9 +30,13 @@
 </template>
 
 <script>
+  import LHeader from '@/components/l-header'
   export default {
     layout: 'tabbar',
     name: "index",
+    components: {
+      LHeader
+    },
     data() {
       return {
       }

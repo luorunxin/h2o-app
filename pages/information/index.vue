@@ -1,21 +1,23 @@
 <template>
   <div class="infomation">
-    <div class="infomationTop">
-      <div @click="back"><van-icon name="arrow-left" size="2rem"/></div>
-      <div @click="management">管理</div>
-    </div>
-    <div class="infomationCenter">
-      <l-shopping-cart-card
-        class="shopping-cart-card"
-        v-for="(item, index) in datas"
-        :key="index"
-        :record="item"
-        @onChangeCheck="onChangeCheck"
-        @onShoppingHandle="onShoppingHandle"
-        @onSubstrctHandle="onSubstrctHandle"
-        @onPlusHandle="onPlusHandle"
-      >
-
+    <l-header
+      :back="false"
+      :bgColor="'#f1f1f1'"
+      :fixed="false"
+      :title="'购物车'"
+    >
+      <div slot="headerRight" class="manege">管理</div>
+    </l-header>
+    <l-shopping-cart-card
+      class="shopping-cart-card"
+      v-for="(item, index) in datas"
+      :key="index"
+      :record="item"
+      @onChangeCheck="onChangeCheck"
+      @onShoppingHandle="onShoppingHandle"
+      @onSubstrctHandle="onSubstrctHandle"
+      @onPlusHandle="onPlusHandle"
+    >
       </l-shopping-cart-card>
     </div>
     <van-submit-bar
@@ -43,11 +45,13 @@
 
 <script>
   import LShoppingCartCard from '~/components/l-shopping-cart-card'
+  import LHeader from '~/components/l-header'
   export default {
     layout: 'tabbar',
     name: "index",
     components: {
-      LShoppingCartCard
+      LShoppingCartCard,
+      LHeader
     },
     data() {
       return {
@@ -66,6 +70,37 @@
           },
           {
             id: 2,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },
+          {
+            id: 3,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },
+          {
+            id: 4,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },
+          {
+            id: 5,
+            checked: false,
+            src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
+            title: '测试数据标题',
+            price: 99,
+            num: 1
+          },{
+            id: 6,
             checked: false,
             src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4132984704,2110908246&fm=11&gp=0.jpg',
             title: '测试数据标题',
@@ -165,6 +200,7 @@
 
 <style lang="scss" scoped>
   .infomation{
+<<<<<<< HEAD
     .ss {
       width: 51.65%;
       text-align: right;
@@ -186,9 +222,25 @@
     }
     .infomationCenter {
       padding: 3%;
+=======
+    padding: 0 3%;
+    height: calc(100vh - 100px);
+    -o-overflow-scrolling: touch;
+    -ms-overflow-scrolling: touch;
+    -moz-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    overflow:auto;
+    .manege{
+      font-size: 1.3rem;
+      white-space: nowrap;
+>>>>>>> 0d23f12870086ba9524982f4f7bfc4765b52ab14
     }
     .shopping-cart-card{
       margin-bottom: 3%;
+    }
+    .van-submit-bar{
+      bottom: 50px;
     }
   }
 </style>
