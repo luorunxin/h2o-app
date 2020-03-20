@@ -1,24 +1,43 @@
 <template>
   <div class="infomation">
-    <l-shopping-cart-card
-      class="shopping-cart-card"
-      v-for="(item, index) in datas"
-      :key="index"
-      :record="item"
-      @onChangeCheck="onChangeCheck"
-      @onShoppingHandle="onShoppingHandle"
-      @onSubstrctHandle="onSubstrctHandle"
-      @onPlusHandle="onPlusHandle"
-    >
+    <div class="infomationTop">
+      <div @click="back"><van-icon name="arrow-left" size="2rem"/></div>
+      <div @click="management">管理</div>
+    </div>
+    <div class="infomationCenter">
+      <l-shopping-cart-card
+        class="shopping-cart-card"
+        v-for="(item, index) in datas"
+        :key="index"
+        :record="item"
+        @onChangeCheck="onChangeCheck"
+        @onShoppingHandle="onShoppingHandle"
+        @onSubstrctHandle="onSubstrctHandle"
+        @onPlusHandle="onPlusHandle"
+      >
 
-    </l-shopping-cart-card>
+      </l-shopping-cart-card>
+    </div>
     <van-submit-bar
       :price="sum"
       button-text="提交订单"
       @submit="onSubmit"
+      v-if="isShow"
     >
       <van-checkbox checked-color="#ff8000" @click="selectAll"  v-model="checked">全选</van-checkbox>
     </van-submit-bar>
+    <van-submit-bar
+      button-text="删除订单"
+      @submit="deletes"
+      v-else
+    >
+      <van-checkbox checked-color="#ff8000" @click="selectAll"  v-model="checked">全选</van-checkbox>
+      <div class="ss">总计: <span>{{ sun }}</span>件商品</div>
+    </van-submit-bar>
+
+
+
+
   </div>
 </template>
 
@@ -34,6 +53,8 @@
       return {
         checked: false,
         sum:0,
+        isShow: true,
+        sun:0,
         datas: [
           {
             id: 1,
@@ -58,14 +79,30 @@
       this.on()
     },
     methods: {
+      deletes() {
+        this.datas=[];
+        this.sun = 0;
+        Toast.success('删除成功');
+      },
+      //返回上层
+      back() {
+        this.$router.go(-1)
+      },
+      //管理订单
+      management() {
+        this.isShow = !this.isShow
+        // this.sun = this.datas.length
+      },
       selectAll() {
         this.sum = 0
         for(let i in this.datas){
           if(!this.checked) {
             this.datas[i].checked = true
             this.sum += this.datas[i].price * this.datas[i].num * 100
+            this.sun+=this.datas[i].num
           }else{
             this.datas[i].checked = false
+            this.sun-=this.datas[i].num
           }
         }
       },
@@ -86,6 +123,7 @@
         this.datas.forEach(item => {
           if(!item.checked) {
             flag = true
+            this.sun+=item.num
           }
         })
         if(flag) {
@@ -111,9 +149,15 @@
         this.sum = 0
         for(let i in this.datas){
           if(this.datas[i].id == record.id) continue;
-          if(this.datas[i].checked) this.sum += this.datas[i].price * this.datas[i].num * 100
+          if(this.datas[i].checked) {
+            this.sum += this.datas[i].price * this.datas[i].num * 100
+
+          }
         }
-        if(record.checked) this.sum += record.price * record.num * 100
+        if(record.checked) {
+          this.sum += record.price * record.num * 100
+
+        }
       }
     }
   }
@@ -121,7 +165,28 @@
 
 <style lang="scss" scoped>
   .infomation{
-    padding: 3%;
+    .ss {
+      width: 51.65%;
+      text-align: right;
+      span {
+        color: #ff8000;
+        font-size: 2.5rem;
+      }
+    }
+    .infomationTop {
+      padding: 3%;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      font-size: 1.5rem;
+      background-color: #fff;
+      div:nth-child(2) {
+        color: #ff8000;
+      }
+    }
+    .infomationCenter {
+      padding: 3%;
+    }
     .shopping-cart-card{
       margin-bottom: 3%;
     }
