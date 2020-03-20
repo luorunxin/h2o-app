@@ -29,7 +29,7 @@
           <div class="single" v-for="(it,ind) in item.buttons" :key="ind">
             <div class="orderIcon">
               <van-icon class="icon" color="#ff8000" :name="it.icon" size="2.5rem"/>
-              <div class="orderMsg">{{ it.text }}</div>
+              <div class="orderMsg" @click="address">{{ it.text }}</div>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@
               arrowTitle: '查看全部工具'
             },
             buttons:[
-              {icon:'',text:'每日返现'},
+              {icon:'',text:'地址'},
               {icon:'',text:'每日返现'},
               {icon:'',text:'每日返现'},
               {icon:'',text:'每日返现'},
@@ -96,6 +96,15 @@
       }
     },
     methods: {
+      address() {
+        this.$router.push({
+          path: '/my/address',
+          query: {
+            id:'1',
+            name: '地址'
+          }
+        })
+      },
       onPanelCardHandle(record) {
         switch (record.title) {
           case '我的订单':
