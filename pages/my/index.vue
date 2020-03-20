@@ -91,7 +91,7 @@
     methods: {
       address() {
         this.$router.push({
-          path: '/my/address',
+          path: '/my/address/',
           query: {
             id:'1',
             name: '地址'
