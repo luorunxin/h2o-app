@@ -14,7 +14,7 @@
     <div
       v-if="title"
       class="header-title"
-      :style="{color: color}"
+      :style="[{color: color}, {'text-align': back || (!back&&!$slots.headerRight)?'center':'left'}]"
     >
       {{title}}
     </div>
@@ -81,9 +81,8 @@
     }
     .header-title{
       font-size: 1.6rem;
-      font-weight: 400;
+      font-weight: 500;
       width: 100%;
-      text-align: center;
     }
     .header-right{
       display: flex;

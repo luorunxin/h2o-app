@@ -1,5 +1,13 @@
 <template>
   <div class="infomation">
+    <l-header
+      :back="false"
+      :bgColor="'#f1f1f1'"
+      :fixed="false"
+      :title="'购物车'"
+    >
+      <div slot="headerRight" class="manege">管理</div>
+    </l-header>
     <l-shopping-cart-card
       class="shopping-cart-card"
       v-for="(item, index) in datas"
@@ -24,11 +32,13 @@
 
 <script>
   import LShoppingCartCard from '~/components/l-shopping-cart-card'
+  import LHeader from '~/components/l-header'
   export default {
     layout: 'tabbar',
     name: "index",
     components: {
-      LShoppingCartCard
+      LShoppingCartCard,
+      LHeader
     },
     data() {
       return {
@@ -152,7 +162,7 @@
 
 <style lang="scss" scoped>
   .infomation{
-    padding: 3% 3% 0 3%;
+    padding: 0 3%;
     height: calc(100vh - 100px);
     -o-overflow-scrolling: touch;
     -ms-overflow-scrolling: touch;
@@ -160,6 +170,10 @@
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
     overflow:auto;
+    .manege{
+      font-size: 1.3rem;
+      white-space: nowrap;
+    }
     .shopping-cart-card{
       margin-bottom: 3%;
     }
