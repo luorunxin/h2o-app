@@ -15,7 +15,7 @@
             <div>{{ item.phone }}</div>
           </div>
         </div>
-        <div class="addressEdit" @click="editAddress">
+        <div class="addressEdit" @click="editAddress(item)">
           <i :class="['iconfont', item.icon]"></i>
         </div>
       </div>
@@ -53,12 +53,12 @@
     },
     methods: {
       //编辑地址
-      editAddress() {
+      editAddress(item) {
         this.$router.push({
-          path: '/my/address/editAddress',
+          path: '/my/address/addNewAddress',
           query: {
-            id:1,
-            userAddressData:this.addressData
+            status: 2,
+            userAddressData:JSON.stringify(item)
           }
         })
       },
@@ -66,6 +66,9 @@
       addresss() {
         this.$router.push({
           path: '/my/address/addNewAddress',
+          query: {
+            status: 1,
+          }
         })
       }
     },
