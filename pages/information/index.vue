@@ -3,21 +3,21 @@
     <l-header
       :back="false"
       :bgColor="'#f1f1f1'"
-      :fixed="false"
       :title="'购物车'"
     >
-      <div slot="headerRight" class="manege">管理</div>
+      <div slot="headerRight" class="manege" @click="management">管理</div>
     </l-header>
-    <l-shopping-cart-card
-      class="shopping-cart-card"
-      v-for="(item, index) in datas"
-      :key="index"
-      :record="item"
-      @onChangeCheck="onChangeCheck"
-      @onShoppingHandle="onShoppingHandle"
-      @onSubstrctHandle="onSubstrctHandle"
-      @onPlusHandle="onPlusHandle"
-    >
+    <div class="content-box">
+      <l-shopping-cart-card
+        class="shopping-cart-card"
+        v-for="(item, index) in datas"
+        :key="index"
+        :record="item"
+        @onChangeCheck="onChangeCheck"
+        @onShoppingHandle="onShoppingHandle"
+        @onSubstrctHandle="onSubstrctHandle"
+        @onPlusHandle="onPlusHandle"
+      >
       </l-shopping-cart-card>
     </div>
     <van-submit-bar
@@ -33,13 +33,8 @@
       @submit="deletes"
       v-else
     >
-      <van-checkbox checked-color="#ff8000" @click="selectAll"  v-model="checked">全选</van-checkbox>
-      <div class="ss">总计: <span>{{ sun }}</span>件商品</div>
+      <van-checkbox class="decheckbox" checked-color="#ff8000" @click="selectAll"  v-model="checked">全选</van-checkbox>
     </van-submit-bar>
-
-
-
-
   </div>
 </template>
 
@@ -115,14 +110,13 @@
     },
     methods: {
       deletes() {
-        this.datas=[];
-        this.sun = 0;
-        Toast.success('删除成功');
+        if (this.checked) {
+          this.datas = []
+          this.$toast.success('删除成功');
+        }
+
       },
       //返回上层
-      back() {
-        this.$router.go(-1)
-      },
       //管理订单
       management() {
         this.isShow = !this.isShow
@@ -200,29 +194,6 @@
 
 <style lang="scss" scoped>
   .infomation{
-<<<<<<< HEAD
-    .ss {
-      width: 51.65%;
-      text-align: right;
-      span {
-        color: #ff8000;
-        font-size: 2.5rem;
-      }
-    }
-    .infomationTop {
-      padding: 3%;
-      display: flex;
-      justify-content: space-between;
-      align-content: center;
-      font-size: 1.5rem;
-      background-color: #fff;
-      div:nth-child(2) {
-        color: #ff8000;
-      }
-    }
-    .infomationCenter {
-      padding: 3%;
-=======
     padding: 0 3%;
     height: calc(100vh - 100px);
     -o-overflow-scrolling: touch;
@@ -231,10 +202,16 @@
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
     overflow:auto;
+    .content-box{
+      padding-top: 50px;
+    }
+    .decheckbox{
+      width: 100%;
+      text-align: left;
+    }
     .manege{
       font-size: 1.3rem;
       white-space: nowrap;
->>>>>>> 0d23f12870086ba9524982f4f7bfc4765b52ab14
     }
     .shopping-cart-card{
       margin-bottom: 3%;
