@@ -58,6 +58,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      .loading-icon{
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 1rem;
+        animation:retate .5s linear infinite;
+        -moz-animation:retate .5s linear infinite; /* Firefox */
+        -webkit-animation:retate .5s linear infinite; /* Safari and Chrome */
+        -o-animation:retate .5s linear infinite; /* Opera */
+      }
     }
     .finish{
       text-align: center;
@@ -66,5 +75,22 @@
       text-align: center;
       color: grey;
     }
+  }
+  @keyframes retate {
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+  }
+  @-moz-keyframes retate { /* Firefox */
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+  }
+  @-webkit-keyframes retate { /* Safari 和 Chrome */
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+  }
+
+  @-o-keyframes retate { /* Opera */
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
   }
 </style>
