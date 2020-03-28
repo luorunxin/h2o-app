@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <div class="back" @click="back"><van-icon name="arrow-left" /></div>
    <div class="loginBox">
      <div class="loginIcon">
        <i class="iconfont icon-touxiang"></i>
@@ -57,6 +58,10 @@
       }
     },
     methods: {
+      //返回
+      back() {
+        this.$router.back()
+      },
       VerifyPhone() {
         //验证手机号
         if (/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone)) {
@@ -76,7 +81,7 @@
           phone: this.phone,
           code: this.code
         };
-        // this.$ajax('/login',JSON.stringify(params));
+        this.$ajax('/login',JSON.stringify(params));
         Storage.setLocal('user_info',params)
         let go_path = Storage.getLocal('go_path')
         if(go_path){
@@ -94,7 +99,10 @@
   background: #fff;
   height: 100vh;
   display: grid;
-  justify-items: center;
+  .back {
+    padding: 3%;
+    font-size: 2.5rem;
+  }
   .loginBox {
     display: grid;
     grid-template-rows: repeat(5,1fr);
