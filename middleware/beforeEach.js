@@ -1,6 +1,5 @@
 import Storage from '~/utils/storage.js'
 export default function ({route, redirect}) {
-  console.log(route)
   if(route.fullPath === '' || route.fullPath === '/'){
     redirect('/home')
   }
