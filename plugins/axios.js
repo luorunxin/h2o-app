@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Storage from '~/utils/storage.js'
 axios.defaults.withCredentials = true// 跨域处理 允许携带cookie
-export default function ({ $axios, redirect }) {
+export default function ({ $axios, redirect, route }) {
   //正常请求返回处理
   $axios.onRequest(req => {
     console.log(req)
@@ -12,9 +12,7 @@ export default function ({ $axios, redirect }) {
     switch (code) {
       //错误代码
       case 401:
-        // sessionStorage.clear();
-        // redirect('/login')
-        Storage.removeLocal('user_info')
+        redirect('/login')
         break;
       case 403:
         sessionStorage.clear();
