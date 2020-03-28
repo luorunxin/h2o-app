@@ -11,7 +11,7 @@
         <div class="price-box">
           <span class="money-icon">¥</span>
           <span class="price">{{record.price | getPrice}}</span>
-          <span class="payment-num">{{record.paymentNum}}人付款</span>
+          <span class="payment-num">{{record.payment_number}}人付款</span>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@
       align-items: flex-start;
       h4{
         text-align: left;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 400;
         display: -webkit-box;
         -webkit-box-orient: vertical;

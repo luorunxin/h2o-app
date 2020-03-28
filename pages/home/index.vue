@@ -39,8 +39,7 @@
       @refresh="refresh"
     >
       <div class="container">
-        <div class="container-left"  @click="JumpDetails"
-        >
+        <div class="container-left">
           <l-card
             class="card"
             v-for="(item, index) in list"
@@ -49,10 +48,10 @@
             :record="item"
             @onCardHandle="onCardHandle"
           >
-            <l-label class="label" :label="item.label" />
+            <!--<l-label class="label" :label="item.label" />-->
           </l-card>
         </div>
-        <div class="container-right" @click="JumpDetails">
+        <div class="container-right">
           <l-card
             class="card"
             v-for="(item, index) in list"
@@ -61,11 +60,17 @@
             :record="item"
             @onCardHandle="onCardHandle"
           >
-            <l-label class="label" :label="item.label" />
+            <!--<l-label class="label" :label="item.label" />-->
           </l-card>
         </div>
       </div>
     </l-refresh>
+    <l-loading-more
+      :loadingMore="loadingMore"
+      :finish="finish"
+      :nomore="nomore"
+      @onBottom="onLoadingMore"
+    />
   </div>
 </div>
 </template>
@@ -74,59 +79,65 @@
   import LRefresh from '~/components/l-refresh'
   import LCard from '~/components/l-card'
   import LLabel from '~/components/l-label'
+  import LLoadingMore from '~/components/l-loading-more'
   export default {
     layout: 'tabbar',
     name: "index",
     components: {
       LRefresh,
       LCard,
-      LLabel
+      LLabel,
+      LLoadingMore
     },
     data() {
       return {
-        list: [
-          {
-            src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584191214702&di=d330763a4c2d9173eaac684f3e4ea392&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg',
-            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
-            price: 1000,
-            paymentNum: 10000,
-            label: '产地:罗家巷子'
-          },
-          {
-            src: '',
-            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
-            price: 100,
-            paymentNum: 10000,
-            label: '产地:罗家巷子'
-          },
-          {
-            src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584191214702&di=d330763a4c2d9173eaac684f3e4ea392&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg',
-            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
-            price: 1000,
-            paymentNum: 10000,
-            label: '产地:罗家巷子'
-          },
-          {
-            src: '',
-            title: '憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨憨',
-            price: 100,
-            paymentNum: 10000,
-            label: '产地:罗家巷子'
-          }
-        ]
+        list: [],
+        page: 1,
+        size: 10,
+        loadingMore: true,
+        finish: false,
+        nomore: false
       }
     },
+    mounted() {
+      this.getGoodsList()
+    },
     methods: {
-      JumpDetails() {
-        this.$router.push({
-          path:'/home/Details',
-          query: {
-            id:'1',
-            name:'我是跳转来的'
+      onLoadingMore() {
+        this.loadingMore = true
+        this.page+=1
+        this.getGoodsList()
+      },
+      getGoodsList() {
+        let params = {
+          page: this.page,
+          size: this.size
+        }
+        this.$ajax('/goodsList', JSON.stringify(params)).then(res => {
+          if(res.status == 200){
+            this.list = this.list.concat(res.result)
+            this.loadingMore = false
+            if(res.result.length<this.size){
+              this.nomore = true
+            }else{
+              this.nomore = false
+            }
+          }else{
+            this.$toast.fail(res.message)
           }
+        }).catch(err => {
+          console.error(err)
         })
       },
-
+      // JumpDetails() {
+      //   this.$router.push({
+      //     path:'/home/Details',
+      //     query: {
+      //       id:'1',
+      //       name:'我是跳转来的'
+      //     }
+      //   })
+      // },
       onCardHandle(record) {
         console.log(record)
       },
