@@ -1,11 +1,18 @@
 import Vue from 'vue'
 import BASEURL from './baseURL.js'
 import Storage from '../utils/storage.js'
+import Util from '../utils/util.js'
 Vue.use({
   install(vue) {
     vue.prototype.$ajax = function(url, data, method, headers) {
       if (!url) {
         return console.error("请求url错误: ", url)
+      }
+      let header = {
+        "Content-Type": "application/json;charset=utf-8",
+      }
+      if(!Util.appTokenWhiteUrl.includes(url)){
+        header.access_token = Storage.getLocal('user_info').access_token || ''
       }
       url = BASEURL.app + url
       let options = {
@@ -13,10 +20,7 @@ Vue.use({
         url,
         data,
         headers: Object.assign(
-          {
-            "Content-Type": "application/json;charset=utf-8",
-            'access_token':Storage.getLocal('user_info').access_token || ''
-          },
+          header,
           headers
         )
       };
