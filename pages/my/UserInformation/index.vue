@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import Storage from '~/utils/storage.js'
   export default {
     name: "index",
     data() {
@@ -26,8 +25,7 @@
         this.$router.back()
       },
       out() {
-        Storage.removeLocal('user_info');
-        this.$router.push('/')
+        this.$router.push('/login')
       }
     }
   }

@@ -129,20 +129,13 @@
           console.error(err)
         })
       },
-      // JumpDetails() {
-      //   this.$router.push({
-      //     path:'/home/Details',
-      //     query: {
-      //       id:'1',
-      //       name:'我是跳转来的'
-      //     }
-      //   })
-      // },
       onCardHandle(record) {
-        console.log(record)
+        this.$router.push({path:'/home/Details',query:{
+          id:record.id
+          }})
       },
       refresh() {
-        let _that = this
+        let _that = this;
         setTimeout(() => {
           _that.$refs['refresh'].refreshComplete()
         }, 2000)

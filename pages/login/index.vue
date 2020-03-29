@@ -81,14 +81,21 @@
           phone: this.phone,
           code: this.code
         };
-        this.$ajax('/login',JSON.stringify(params));
-        Storage.setLocal('user_info',params)
-        let go_path = Storage.getLocal('go_path')
-        if(go_path){
-          this.$router.push(go_path.path)
-        }else{
-          this.$router.push('/')
-        }
+        this.$ajax('/login',JSON.stringify(params)).then(res => {
+          if(res.status == 200){
+            Storage.setLocal('user_info',res.result)
+            let go_path = Storage.getLocal('go_path')
+            if(go_path){
+              this.$router.push(go_path.path)
+            }else{
+              this.$router.push('/')
+            }
+          }else{
+            this.$notify({ type: 'danger', message: res.message })
+          }
+        }).catch(err => {
+          console.error(err)
+        });
       }
     }
   }
