@@ -9,107 +9,131 @@
     </div>
     <div class="swipe">
       <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="(image, index) in images" :key="index">
-          <img :src="image" width="100%" height="35%" />
+        <van-swipe-item v-for="(item, index) in GoodsList.images" :key="index">
+          <img :src="item.src" width="100%" height="35%" />
         </van-swipe-item>
       </van-swipe>
     </div>
     <div class="price">
 <!--      详细价格-->
       <div class="DetailedPrice">
-        <div><span>￥</span>938-1999</div>
-        <div>价格￥<span>938.01</span>起</div>
+        <div><span>￥</span>{{ GoodsList.price }}</div>
       </div>
 <!--      商品卷-->
-      <div class="CommodityRoll">
-        <div class="bg">商品卷满1199减100</div>
-        <div class="bg">购买得积分</div>
-        <div></div>
-        <div>领卷></div>
-      </div>
+<!--      <div class="CommodityRoll">-->
+<!--        <div class="bg">商品卷满1199减100</div>-->
+<!--        <div class="bg">购买得积分</div>-->
+<!--        <div></div>-->
+<!--        <div>领卷></div>-->
+<!--      </div>-->
 <!--      商品名字-->
       <div class="ProductName">
-        <div>享三期免息,可免20.7元,每期299.7元(每日10元)</div>
-        <div>领100元卷分期免息新品128g华为honor/荣耀 荣耀8x手机</div>
+<!--        <div>享三期免息,可免20.7元,每期299.7元(每日10元)</div>-->
+        <div class="title">{{ GoodsList.title }}</div>
       </div>
       <div class="Delivery">
         <div class="ship">
           <div>发货</div>
-          <div><van-icon name="location-o" />广东深圳</div>
+          <div><van-icon name="location-o" />{{GoodsList.ship_address}}</div>
 
-          <div>快递:0.00</div>
+          <div>快递:{{GoodsList.courier_fees}}</div>
 
-          <div>月销444</div>
+          <div>月销{{GoodsList.monthly_sales}}</div>
         </div>
+      </div>
+      <div >
+        <van-cell is-link @click="showPopup1">详情</van-cell>
+
+        <van-popup v-model="show1" position="bottom">
+          <div v-for="(item,index) in GoodsList.type" :key="index"  class="sex">
+            <div><span>性别:</span><van-tag class="sss" plain >{{item.gender | ss}}</van-tag></div>
+            <div><span>类型:</span><van-tag class="sss" plain >{{item.category_id | sss}}:</van-tag></div>
+            <div><span>部位:</span><van-tag class="sss" plain type="primary">{{item.part_id | ssss}}</van-tag></div>
+          </div>
+          <div v-for="(item,index) in GoodsList.amounts" :key="index" class="aa">
+            <span>尺码:</span><van-tag class="ss" plain type="primary">{{item.amount}}</van-tag>
+            <span>颜色:</span><van-tag class="ss" plain type="success">{{item.color}}</van-tag>
+            <span>型号:</span><van-tag class="ss" plain type="danger">{{item.size}}</van-tag>
+          </div>
+        </van-popup>
+      </div>
+      <div>
+        <!-- 优惠券单元格 -->
+        <van-cell is-link @click="showPopup" >参数</van-cell>
+        <van-popup v-model="show"  position="bottom">
+          <div class="center">
+            <div class="title">产品参数</div>
+            <div v-for="(item,index) in parameters" :key="index" class="box">
+              <div class="name">{{item.key}}</div>
+              <div class="nameData">{{item.value}}</div>
+            </div>
+          </div>
+        </van-popup>
       </div>
 <!--      赔偿保障相关-->
-      <div class="Guarantee">
-        <div>保障</div>
-        <div><span>假一赔四</span><span>免举证退换货</span><span>全国联保</span><span>延保服务</span></div>
-        <div><van-icon name="arrow" /></div>
-      </div>
-      <div class="ProductSelection">
-        <div class="ProductSelectionTop">
-          <div>选择</div>
-          <div>配送至:孝南区书院街街道,选择 机身颜色...</div>
-          <div><van-icon name="arrow" /></div>
-        </div>
-        <div class="ProductSelectionCenter">
-          <div>
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">
-          </div>
-          <div>
-            9种颜色可以选择
-          </div>
-        </div>
-        <div class="ProductSelectionBottom">
-          <div>参数</div>
-          <div>是否支持红外 网络类型...</div>
-          <div><van-icon name="arrow" /></div>
-        </div>
-      </div>
+<!--      <div class="Guarantee">-->
+<!--        <div>保障</div>-->
+<!--        <div><span>假一赔四</span><span>免举证退换货</span><span>全国联保</span><span>延保服务</span></div>-->
+<!--        <div><van-icon name="arrow" /></div>-->
+<!--      </div>-->
+<!--      <div class="ProductSelection">-->
+<!--        <div class="ProductSelectionTop">-->
+<!--          <div>选择</div>-->
+<!--          <div>配送至:孝南区书院街街道,选择 机身颜色...</div>-->
+<!--          <div><van-icon name="arrow" /></div>-->
+<!--        </div>-->
+<!--        <div class="ProductSelectionCenter">-->
+<!--          <div>-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            9种颜色可以选择-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
       <div class="comment">
-        <div class="commentTop">
-          <div>
-            <div>宝贝评价(11143)</div>
-            <div>查看全部<van-icon name="arrow" /></div>
-          </div>
-          <div class="ProductCharacteristics"><span>手机不错(85564)</span><span>性能强劲(564)</span><span>款式漂亮(432)</span></div>
-          <div class="userAppraisal">
-            <div class="user">
-              <div class="userIcon"></div>
-              <div class="userName">t**3</div>
-            </div>
-            <div class="userComments">这玩意真j8好,我还要买买买我asdfasdsdfgsfdgsdfgdssdfasdfasdfasdf</div>
-          </div>
-        </div>
-        <div class="commentCenter">
-          <div class="Buyer">
-            <div>洋淘买家秀(24)</div>
-            <div>查看全部<van-icon name="arrow" /></div>
-          </div>
-          <div class="BuyerImg">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">
-            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">
-          </div>
-        </div>
-        <div class="commentBottom">
-          <div class="ask">
-            <div >问大家(234)</div>
-            <div>查看全部<van-icon name="arrow" /></div>
-          </div>
-          <div class="askUser">
-            <div><span>这个东村怎么样,好不好用啊,多少钱啊</span><span>2个回答</span></div>
-            <div><span>这东西怎么样,是正品吗,你们多少钱买的啊</span><span>4个回答</span></div>
-          </div>
-        </div>
+<!--        <div class="commentTop">-->
+<!--          <div>-->
+<!--            <div>宝贝评价(11143)</div>-->
+<!--            <div>查看全部<van-icon name="arrow" /></div>-->
+<!--          </div>-->
+<!--          <div class="ProductCharacteristics"><span>手机不错(85564)</span><span>性能强劲(564)</span><span>款式漂亮(432)</span></div>-->
+<!--          <div class="userAppraisal">-->
+<!--            <div class="user">-->
+<!--              <div class="userIcon"></div>-->
+<!--              <div class="userName">t**3</div>-->
+<!--            </div>-->
+<!--            <div class="userComments">这玩意真j8好,我还要买买买我</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="commentCenter">-->
+<!--          <div class="Buyer">-->
+<!--            <div>洋淘买家秀(24)</div>-->
+<!--            <div>查看全部<van-icon name="arrow" /></div>-->
+<!--          </div>-->
+<!--          <div class="BuyerImg">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
+<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="commentBottom">-->
+<!--          <div class="ask">-->
+<!--            <div >问大家(234)</div>-->
+<!--            <div>查看全部<van-icon name="arrow" /></div>-->
+<!--          </div>-->
+<!--          <div class="askUser">-->
+<!--            <div><span>这个东村怎么样,好不好用啊,多少钱啊</span><span>2个回答</span></div>-->
+<!--            <div><span>这东西怎么样,是正品吗,你们多少钱买的啊</span><span>4个回答</span></div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div class="Shopping">
         <van-goods-action>
@@ -128,14 +152,49 @@
     name: "index",
     data() {
       return {
-        msg:'',
-        images: [
-          'https://img.yzcdn.cn/vant/apple-1.jpg',
-          'https://img.yzcdn.cn/vant/apple-2.jpg'
-        ],
+        //商品id
+        id:null,
+        GoodsList:{},
+        show: false,
+        show1: false,
+        parameters:[]
       }
     },
+    filters: {
+      ss(value) {
+        return value==1?'男士':'女'
+      },
+      sss(value) {
+        return value==1001?'服装':''
+      },
+      ssss(value) {
+        return value==10011?'上衣':''
+      },
+    },
     methods: {
+      getParameters(val) {
+        let arr = []
+        if(val.indexOf(';') != -1){
+          val.split(';').forEach(item => {
+            let obj = {}
+            obj.key = item.split(':')[0]
+            obj.value = item.split(':')[1]
+            arr.push(obj)
+          })
+        }else{
+          let obj = {}
+          obj.key = val.split(':')[0]
+          obj.value = val.split(':')[1]
+          arr.push(obj)
+        }
+        return arr
+      },
+      showPopup() {
+        this.show = true;
+      },
+      showPopup1() {
+        this.show1 = true;
+      },
       onClickIcon() {
         Toast('点击图标');
       },
@@ -146,15 +205,87 @@
         this.$router.go(-1)
       }
     },
-    created() {
-      this.msg = this.$route.query.msg;
-      console.log(this.msg)
-    }
+    mounted() {
+
+      this.id = this.$route.query.id;
+      console.log(this.id)
+      this.$ajax('/getGoodsById',JSON.stringify({id:this.id})).then(res=>{
+        console.log(res)
+        this.GoodsList = {...res.result}
+        console.log(this.GoodsList)
+        this.parameters = this.getParameters(this.GoodsList.parameter)
+
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
   }
 </script>
 
 <style scoped lang="scss">
 .details {
+  .parameter {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    padding: 3%;
+    color: #cccccc;
+  }
+  .ParameterDetails {
+    z-index: 999;
+    background-color: #fff;
+    height: 100vh;
+  }
+  .sex {
+    padding: 3%;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: left;
+    span {
+      margin-right: .5rem;
+    }
+    .sss {
+      font-size: 1.4rem;
+    }
+    div {
+      margin-right: 1rem;
+    }
+    div:nth-child(3) {
+      margin-left: 4rem;
+    }
+  }
+  .aa {
+    height: 50vh;
+    padding: 3%;
+    span {
+      font-size: 1.4rem;
+      margin-right: 1rem;
+    }
+    .ss {
+      width: 50px;
+      height: 30px;
+      font-size: 1.3rem;
+    }
+  }
+  .center {
+    font-size: 1.5rem;
+    text-align: center;
+    height: 50vh;
+    .title {
+      grid-row-start: 1;
+      grid-row-end: 2;
+      grid-column-start: 3;
+      grid-column-end: 4;
+    }
+    .box {
+      padding: 3%;
+      display: flex;
+      justify-content: left;
+      div {
+        margin-right: 2rem;
+      }
+    }
+  }
   .detailsTop {
     display: grid;
     grid-template-rows: 100%;
@@ -206,6 +337,9 @@
       }
     }
     .ProductName {
+      .title {
+        font-size: 2rem;
+      }
       div:nth-child(1) {
         color: #FF8000;
         margin-bottom: 2%;

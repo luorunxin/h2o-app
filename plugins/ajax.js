@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import BASEURL from './baseURL.js'
-
+import Storage from '../utils/storage.js'
 Vue.use({
   install(vue) {
     vue.prototype.$ajax = function(url, data, method, headers) {
@@ -14,7 +14,8 @@ Vue.use({
         data,
         headers: Object.assign(
           {
-            "Content-Type": "application/json;charset=utf-8"
+            "Content-Type": "application/json;charset=utf-8",
+            'access_token':Storage.getLocal('user_info').access_token || ''
           },
           headers
         )

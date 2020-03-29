@@ -10,4 +10,7 @@ export default function ({route, redirect}) {
       redirect('/login')
     }
   }
+  if(route.path === '/login'){
+    Storage.removeLocal('user_info')
+  }
 }

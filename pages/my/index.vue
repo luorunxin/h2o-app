@@ -13,8 +13,7 @@
             签到领10元红包
           </div>
         </div>
-        <div class="four">
-        </div>
+        <div class="four" @click="set"></div>
       </div>
     </div>
     <div class="myCentent">
@@ -76,6 +75,10 @@
       }
     },
     methods: {
+      //点击头像
+      set() {
+        this.$router.push('/my/UserInformation')
+      },
       address() {
         this.$router.push({
           path: '/my/address/',
