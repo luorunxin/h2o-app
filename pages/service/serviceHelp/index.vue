@@ -39,6 +39,7 @@
   import LTalkRight from '~/components/l-talk-right'
   import BASEURL from '~/plugins/baseURL.js'
   import LHeader from '~/components/l-header'
+  import Storage from '~/utils/storage.js'
   export default {
     name: "index",
     components: {
@@ -56,14 +57,15 @@
         stop: 0,
         socket: null,
         token: '',
-        timer: null
+        timer: null,
+        user_info: null
       }
     },
     created() {
       this.msg = this.$route.query.msg
     },
     mounted() {
-      this.token = parseInt(Math.random()*100000).toString() + new Date().getTime()
+      this.user_info = Storage.getLocal('user_info')
       this.initWebSocket()
       let _this = this
       //下面的这代码是猎取当前屏幕可视取的高度
@@ -107,11 +109,12 @@
       },
       send(data) {
         if(this.socket.readyState != 1) return
-        let obj = {
-          token: this.token
+        let userInfo = {
+          ...this.user_info,
+          type: 'user'
         }
-        if(data) obj.message = data
-        this.socket.send(JSON.stringify(obj))
+        if(data) userInfo.message = data
+        this.socket.send(JSON.stringify(userInfo))
       },
       message() {
         let _this = this
