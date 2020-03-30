@@ -56,7 +56,6 @@
         beforeHeight: 0,
         stop: 0,
         socket: null,
-        token: '',
         timer: null,
         user_info: null
       }
