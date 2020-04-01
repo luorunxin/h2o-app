@@ -4,7 +4,7 @@
     <div class="Positioning">
       <div class="PositioningIcon">
         <van-icon size="2rem" color="#ff8000" name="location" />
-        <h2>湖北省孝感市</h2>
+        <h2>{{location}}</h2>
       </div>
       <div>
         <van-icon size="2rem" name="scan" />
@@ -80,6 +80,7 @@
   import LCard from '~/components/l-card'
   import LLabel from '~/components/l-label'
   import LLoadingMore from '~/components/l-loading-more'
+  import Storage from '~/utils/storage.js'
   export default {
     layout: 'tabbar',
     name: "index",
@@ -96,10 +97,17 @@
         size: 10,
         loadingMore: true,
         finish: false,
-        nomore: false
+        nomore: false,
+        location: null,
       }
     },
     mounted() {
+      let location_info = Storage.getLocal('location')
+      if(location_info.addressComponent){
+        this.location = location_info.addressComponent.province+location_info.addressComponent.city
+      }else{
+        this.location = location_info.province + location_info.city
+      }
       this.getGoodsList()
     },
     methods: {

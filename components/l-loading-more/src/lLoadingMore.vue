@@ -43,7 +43,7 @@
         let scrollTop = window.scrollY,
           windowHeight = document.body.clientHeight,
           scrollHeight = document.body.scrollHeight
-        if(scrollTop+windowHeight == scrollHeight){
+        if(scrollTop+windowHeight >= scrollHeight){
           this.$emit('onBottom')
         }
       }

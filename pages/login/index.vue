@@ -77,9 +77,16 @@
       },
       submit() {
         if(!this.VerifyPhone()) return
+        let location_info = Storage.getLocal('location'), location = ''
+        if(location_info.formattedAddress){
+          location = location_info.formattedAddress
+        }else{
+          location = location_info.province + location_info.city
+        }
         let params = {
           phone: this.phone,
-          code: this.code
+          code: this.code,
+          location: location
         };
         this.$ajax('/login',JSON.stringify(params)).then(res => {
           if(res.status == 200){
