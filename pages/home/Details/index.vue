@@ -19,16 +19,8 @@
       <div class="DetailedPrice">
         <div><span>￥</span>{{ GoodsList.price }}</div>
       </div>
-<!--      商品卷-->
-<!--      <div class="CommodityRoll">-->
-<!--        <div class="bg">商品卷满1199减100</div>-->
-<!--        <div class="bg">购买得积分</div>-->
-<!--        <div></div>-->
-<!--        <div>领卷></div>-->
-<!--      </div>-->
-<!--      商品名字-->
+
       <div class="ProductName">
-<!--        <div>享三期免息,可免20.7元,每期299.7元(每日10元)</div>-->
         <div class="title">{{ GoodsList.title }}</div>
       </div>
       <div class="Delivery">
@@ -44,7 +36,7 @@
       <div >
         <van-cell is-link @click="showPopup1">详情</van-cell>
 
-        <van-popup v-model="show1" position="bottom">
+        <van-popup v-model="show1" position="bottom" class="max">
           <div v-for="(item,index) in GoodsList.type" :key="index"  class="sex">
             <div><span>性别:</span><van-tag class="sss" plain >{{item.gender | ss}}</van-tag></div>
             <div><span>类型:</span><van-tag class="sss" plain >{{item.category_id | sss}}:</van-tag></div>
@@ -70,70 +62,7 @@
           </div>
         </van-popup>
       </div>
-<!--      赔偿保障相关-->
-<!--      <div class="Guarantee">-->
-<!--        <div>保障</div>-->
-<!--        <div><span>假一赔四</span><span>免举证退换货</span><span>全国联保</span><span>延保服务</span></div>-->
-<!--        <div><van-icon name="arrow" /></div>-->
-<!--      </div>-->
-<!--      <div class="ProductSelection">-->
-<!--        <div class="ProductSelectionTop">-->
-<!--          <div>选择</div>-->
-<!--          <div>配送至:孝南区书院街街道,选择 机身颜色...</div>-->
-<!--          <div><van-icon name="arrow" /></div>-->
-<!--        </div>-->
-<!--        <div class="ProductSelectionCenter">-->
-<!--          <div>-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="15%" height="15%">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            9种颜色可以选择-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--      </div>-->
       <div class="comment">
-<!--        <div class="commentTop">-->
-<!--          <div>-->
-<!--            <div>宝贝评价(11143)</div>-->
-<!--            <div>查看全部<van-icon name="arrow" /></div>-->
-<!--          </div>-->
-<!--          <div class="ProductCharacteristics"><span>手机不错(85564)</span><span>性能强劲(564)</span><span>款式漂亮(432)</span></div>-->
-<!--          <div class="userAppraisal">-->
-<!--            <div class="user">-->
-<!--              <div class="userIcon"></div>-->
-<!--              <div class="userName">t**3</div>-->
-<!--            </div>-->
-<!--            <div class="userComments">这玩意真j8好,我还要买买买我</div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="commentCenter">-->
-<!--          <div class="Buyer">-->
-<!--            <div>洋淘买家秀(24)</div>-->
-<!--            <div>查看全部<van-icon name="arrow" /></div>-->
-<!--          </div>-->
-<!--          <div class="BuyerImg">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
-<!--            <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt="" width="20%" height="30%">-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="commentBottom">-->
-<!--          <div class="ask">-->
-<!--            <div >问大家(234)</div>-->
-<!--            <div>查看全部<van-icon name="arrow" /></div>-->
-<!--          </div>-->
-<!--          <div class="askUser">-->
-<!--            <div><span>这个东村怎么样,好不好用啊,多少钱啊</span><span>2个回答</span></div>-->
-<!--            <div><span>这东西怎么样,是正品吗,你们多少钱买的啊</span><span>4个回答</span></div>-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
       <div class="Shopping">
         <van-goods-action>
@@ -255,7 +184,6 @@
     }
   }
   .aa {
-    height: 50vh;
     padding: 3%;
     span {
       font-size: 1.4rem;
@@ -518,4 +446,7 @@
     }
   }
 }
+  .max {
+    max-height: 40vh;
+  }
 </style>

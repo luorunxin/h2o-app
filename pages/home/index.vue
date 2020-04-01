@@ -12,14 +12,11 @@
       </div>
     </div>
     <div class="search">
-      <van-search shape="round" placeholder="请输入搜索关键词" />
+      <van-search shape="round" placeholder="请输入搜索关键词" @click="searchData"/>
     </div>
     <div class="Jiugongge">
       <van-grid>
-        <van-grid-item icon="photo-o" text="美食" />
-        <van-grid-item icon="photo-o" text="商超便利" />
-        <van-grid-item icon="photo-o" text="水果" />
-        <van-grid-item icon="photo-o" text="送药上门" />
+        <van-grid-item icon="photo-o" :text="item.text" v-for="(item,index) in items":key="index" @click="Men(item.text)"/>
       </van-grid>
     </div>
     <div class="ad">
@@ -99,6 +96,12 @@
         finish: false,
         nomore: false,
         location: null,
+        items:[
+          {text:'男装'},
+          {text:'女装'},
+          {text:'鞋子'},
+          {text:'美食'},
+        ]
       }
     },
     mounted() {
@@ -111,6 +114,21 @@
       this.getGoodsList()
     },
     methods: {
+      //点击商品分类跳转页面
+      Men(e) {
+        console.log('e',e)
+        this.$router.push({
+          path: '/home/Man',
+          query:{
+            id:e
+          }
+        })
+      },
+      searchData() {
+        this.$router.push({
+          path:'/home/Search',
+        })
+      },
       onLoadingMore() {
         this.loadingMore = true
         this.page+=1
