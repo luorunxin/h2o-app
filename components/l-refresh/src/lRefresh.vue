@@ -29,7 +29,8 @@
         startY: 0,
         moveY: 0,
         firstNode: null,
-        moveTrue: false
+        moveTrue: false,
+        onScroll: false
       }
     },
     props: {
@@ -41,6 +42,7 @@
     watch: {
     },
     mounted() {
+      document.addEventListener('scroll', this.isScroll, false);
       document.addEventListener('touchstart',this.touchStart,false);
       document.addEventListener('touchmove',this.touchMove,{passive: false});
       document.body.addEventListener('touchend',this.touchEnd,false);
@@ -51,7 +53,12 @@
       document.body.removeEventListener('touchend',this.touchEnd,false);
     },
     methods: {
+      isScroll() {
+        this.onScroll = true
+      },
       refreshComplete() {
+        this.onScroll = false
+        this.moveTrue = false
         let _that = this
         this.state = 'end'
         setTimeout(() => {
@@ -68,8 +75,8 @@
         }, 1300)
       },
       touchStart(e) {
-        if(this.state === 'loading' || this.state === 'end') return
         this.startY = e.touches[0].clientY
+        if(this.onScroll || this.state === 'loading' || this.state === 'end') return
         this.getTouchTarget(e.target)
       },
       touchMove(e) {
@@ -91,10 +98,6 @@
         }
       },
       touchEnd(e) {
-
-        // this.flag = true
-        // this.windowFirstNode = null
-        // this.windowFirstNodeY = 0
         if(this.state === 'loading' || this.state === 'end') return
         if(this.state === 'move') {
           this.state = 'loading'

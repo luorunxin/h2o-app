@@ -27,7 +27,7 @@
     }
   }
 </script>
-<style>
+<style lang="scss" scoped>
   .nuxt-box{
     padding-bottom: 50px;
   }

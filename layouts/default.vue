@@ -12,10 +12,7 @@ export default {
   }
 }
 </script>
-<style>
-  .nuxt-box{
-    padding-bottom: 50px;
-  }
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;

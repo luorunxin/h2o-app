@@ -1,73 +1,86 @@
 <template>
 <div class="container">
-  <div class="homeTop">
-    <div class="Positioning">
-      <div class="PositioningIcon">
-        <van-icon size="2rem" color="#ff8000" name="location" />
-        <h2>{{location}}</h2>
-      </div>
-      <div>
-        <van-icon size="2rem" name="scan" />
-        <van-icon size="2rem" name="comment-o" class="ad1"/>
-      </div>
-    </div>
-    <div class="search">
-      <van-search shape="round" placeholder="请输入搜索关键词" @click="searchData"/>
-    </div>
-    <div class="Jiugongge">
-      <van-grid>
-        <van-grid-item icon="photo-o" :text="item.text" v-for="(item,index) in items":key="index" @click="Men(item.text)"/>
-      </van-grid>
-    </div>
-    <div class="ad">
-      <div>
-        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-          <van-swipe-item>1</van-swipe-item>
-          <van-swipe-item>2</van-swipe-item>
-          <van-swipe-item>3</van-swipe-item>
-          <van-swipe-item>4</van-swipe-item>
-        </van-swipe>
-      </div>
-    </div>
-  </div>
-  <div class="page">
-    <l-refresh
-      ref="refresh"
-      @refresh="refresh"
-    >
-      <div class="container">
-        <div class="container-left">
-          <l-card
-            class="card"
-            v-for="(item, index) in list"
-            v-if="index%2 == 0"
-            :key="index"
-            :record="item"
-            @onCardHandle="onCardHandle"
-          >
-            <!--<l-label class="label" :label="item.label" />-->
-          </l-card>
+  <l-search
+    v-show="showSearch"
+    @onCancel="onCancel"
+  />
+  <div>
+    <div class="homeTop">
+      <div class="Positioning">
+        <div class="PositioningIcon">
+          <van-icon size="2rem" color="#ff8000" name="location" />
+          <h2>{{location}}</h2>
         </div>
-        <div class="container-right">
-          <l-card
-            class="card"
-            v-for="(item, index) in list"
-            v-if="index%2 != 0"
-            :key="index"
-            :record="item"
-            @onCardHandle="onCardHandle"
-          >
-            <!--<l-label class="label" :label="item.label" />-->
-          </l-card>
+        <div>
+          <!--<van-icon size="2rem" name="scan" />-->
+          <van-icon size="2rem" color="#ff8000" name="bell" />
         </div>
       </div>
-    </l-refresh>
-    <l-loading-more
-      :loadingMore="loadingMore"
-      :finish="finish"
-      :nomore="nomore"
-      @onBottom="onLoadingMore"
-    />
+      <div class="search">
+        <van-search input-align="center" shape="round" placeholder="请输入搜索关键词" @click="searchData"/>
+      </div>
+      <div class="Jiugongge">
+        <van-grid :border="false" :column-num="navs.length<4?navs.length:4">
+          <van-grid-item
+            v-for="(item,index) in navs"
+            :key="index"
+            :text="item.text"
+            @click="Men(item.text)"
+          >
+            <i slot="icon" :class="['iconfont', item.icon]"></i>
+          </van-grid-item>
+        </van-grid>
+      </div>
+      <div class="ad">
+        <div>
+          <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+            <van-swipe-item>1</van-swipe-item>
+            <van-swipe-item>2</van-swipe-item>
+            <van-swipe-item>3</van-swipe-item>
+            <van-swipe-item>4</van-swipe-item>
+          </van-swipe>
+        </div>
+      </div>
+    </div>
+    <div class="page">
+      <l-refresh
+        ref="refresh"
+        @refresh="refresh"
+      >
+        <div class="container">
+          <div class="container-left">
+            <l-card
+              class="card"
+              v-for="(item, index) in list"
+              v-if="index%2 == 0"
+              :key="index"
+              :record="item"
+              @onCardHandle="onCardHandle"
+            >
+              <!--<l-label class="label" :label="item.label" />-->
+            </l-card>
+          </div>
+          <div class="container-right">
+            <l-card
+              class="card"
+              v-for="(item, index) in list"
+              v-if="index%2 != 0"
+              :key="index"
+              :record="item"
+              @onCardHandle="onCardHandle"
+            >
+              <!--<l-label class="label" :label="item.label" />-->
+            </l-card>
+          </div>
+        </div>
+      </l-refresh>
+      <l-loading-more
+        :loadingMore="loadingMore"
+        :finish="finish"
+        :nomore="nomore"
+        @onBottom="onLoadingMore"
+      />
+    </div>
   </div>
 </div>
 </template>
@@ -78,10 +91,12 @@
   import LLabel from '~/components/l-label'
   import LLoadingMore from '~/components/l-loading-more'
   import Storage from '~/utils/storage.js'
+  import LSearch from "~/components/l-search/src/lSearch";
   export default {
     layout: 'tabbar',
     name: "index",
     components: {
+      LSearch,
       LRefresh,
       LCard,
       LLabel,
@@ -89,6 +104,7 @@
     },
     data() {
       return {
+        showSearch: false,
         list: [],
         page: 1,
         size: 10,
@@ -96,11 +112,19 @@
         finish: false,
         nomore: false,
         location: null,
-        items:[
-          {text:'男装'},
-          {text:'女装'},
-          {text:'鞋子'},
-          {text:'美食'},
+        navs:[
+          {
+            text:'男装',
+            icon: 'icon-nanzhuang'
+          },
+          {
+            text:'女装',
+            icon: 'icon-nvzhuang'
+          },
+          {
+            text:'鞋子',
+            icon: 'icon-xiezi'
+          }
         ]
       }
     },
@@ -111,38 +135,45 @@
       }else{
         this.location = location_info.province + location_info.city
       }
-      this.getGoodsList()
+      this.getGoodsList(1)
     },
     methods: {
+      onCancel() {
+        this.showSearch = false
+      },
       //点击商品分类跳转页面
       Men(e) {
         console.log('e',e)
         this.$router.push({
-          path: '/home/Man',
+          path: '/singleClass',
           query:{
             id:e
           }
         })
       },
       searchData() {
-        this.$router.push({
-          path:'/home/Search',
-        })
+        this.showSearch = true
       },
       onLoadingMore() {
+        console.log(1)
         this.loadingMore = true
         this.page+=1
-        this.getGoodsList()
+        this.getGoodsList(1)
       },
-      getGoodsList() {
+      getGoodsList(type) {
         let params = {
           page: this.page,
           size: this.size
         }
         this.$ajax('/goodsList', JSON.stringify(params)).then(res => {
           if(res.status == 200){
-            this.list = this.list.concat(res.result)
-            this.loadingMore = false
+            if(type == 1){
+              this.list = this.list.concat(res.result)
+              this.loadingMore = false
+            }else{
+              this.list = res.result
+              this.$refs['refresh'].refreshComplete()
+            }
             if(res.result.length<this.size){
               this.nomore = true
             }else{
@@ -161,10 +192,8 @@
           }})
       },
       refresh() {
-        let _that = this;
-        setTimeout(() => {
-          _that.$refs['refresh'].refreshComplete()
-        }, 2000)
+        this.page=1
+        this.getGoodsList(2)
       }
     }
   }
@@ -172,10 +201,10 @@
 
 <style scoped lang="scss">
 .Positioning {
-  display: grid;
-  grid-template-rows: 100%;
-  grid-template-columns: 80% 20%;
-  padding: 1rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 3%;
   div:nth-child(2) {
     .ad1{
       color: red;
@@ -183,9 +212,8 @@
     }
   }
   .PositioningIcon {
-    display: grid;
-    grid-template-rows: 100%;
-    grid-template-columns: 10% 90%;
+    display: flex;
+    align-items: center;
   }
 }
   .ad {
@@ -218,5 +246,9 @@
     position: sticky;
     top: 0;
     z-index: 999;
+  }
+  .iconfont{
+    font-size: 3rem;
+    color: #ff8000;
   }
 </style>

@@ -34,7 +34,6 @@
 
       function onComplete (data) {
         // data是具体的定位信息
-        alert(JSON.stringify(data,null,2))
         localStorage.setItem('location', JSON.stringify(data))
       }
 
