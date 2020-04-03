@@ -366,6 +366,7 @@
     padding: 0 3%;
     background: white;
     margin-bottom: 1rem;
+    font-size: 1.2rem;
     .single-row{
       padding: 1rem 0;
       .price-icon{
