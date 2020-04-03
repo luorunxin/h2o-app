@@ -3,10 +3,10 @@
     :class="['l-header', {'fixed': fixed}]"
     :style="[{background: bgColor},{}]"
   >
-    <div class="back-box">
+    <div :class="['back-box', {'w100': !title}]">
       <i
         v-if="back"
-        :class="['iconfont', 'icon-fanhui', {'mr': $slots.backRight}]"
+        :class="['iconfont', 'icon-fanhui']"
         @click.stop="goBack"
       ></i>
       <slot name="backRight" />
@@ -18,10 +18,6 @@
     >
       {{title}}
     </div>
-    <!--<div class="search" v-if="search">-->
-      <!--<van-search shape="round" v-model="value" placeholder="请输入搜索关键词" @click="searchMen" />-->
-      <!--<slot name="searchRight"/>-->
-    <!--</div>-->
     <div class="header-right">
       <i v-if="back && !$slots.headerRight" :class="['hidden', 'iconfont', 'icon-fanhui', {'mr': $slots.backRight}]"></i>
       <div v-if="back && !$slots.headerRight" class="hidden">
@@ -37,32 +33,13 @@
     name: "lHeader",
     data() {
       return {
-        // value: null
       }
     },
     props: {
-      //search Right Button
-      // button: {
-      //   type:Boolean,
-      //   default:false
-      // },
-      // data2: {
-      //   type: Boolean,
-      //   default: false
-      // },
-      // data1: {
-      //   type: String,
-      //   default: ''
-      // },
       fixed: {
         type: Boolean,
         default: true
       },
-      //搜索
-      // search:{
-      //   type: Boolean,
-      //   default:false
-      // },
       bgColor: {
         type: String,
         default: 'white'
@@ -84,19 +61,6 @@
       goBack() {
         this.$router.go(-1)
       },
-      // searchMen() {
-      //   if (this.data2) {
-      //     this.$router.push({
-      //       path:'/home/Search',
-      //       query:{
-      //         id:this.data1
-      //       }
-      //     })
-      //   }
-      // },
-      // onSearch(e) {
-      //   console.log(e)
-      // }
     }
   }
 </script>
@@ -110,12 +74,9 @@
     padding: 0 1rem;
     justify-content: space-between;
     overflow: hidden;
-    /*.search {*/
-      /*display: flex;*/
-      /*align-items: center;*/
-      /*height: 50px;*/
-      /*overflow: hidden;*/
-    /*}*/
+    .w100{
+      width: 100%;
+    }
     .back-box{
       display: flex;
       align-items: center;

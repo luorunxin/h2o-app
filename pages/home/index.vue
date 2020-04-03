@@ -25,7 +25,7 @@
             v-for="(item,index) in navs"
             :key="index"
             :text="item.text"
-            @click="Men(item.text)"
+            @click="toSingleClsaa(item)"
           >
             <i slot="icon" :class="['iconfont', item.icon]"></i>
           </van-grid-item>
@@ -115,15 +115,21 @@
         navs:[
           {
             text:'男装',
-            icon: 'icon-nanzhuang'
+            icon: 'icon-nanzhuang',
+            category_id: 1001,
+            gender: 1
           },
           {
             text:'女装',
-            icon: 'icon-nvzhuang'
+            icon: 'icon-nvzhuang',
+            category_id: 1001,
+            gender: 2
           },
           {
             text:'鞋子',
-            icon: 'icon-xiezi'
+            icon: 'icon-xiezi',
+            category_id: 1001,
+            part_id: 10012
           }
         ]
       }
@@ -142,12 +148,11 @@
         this.showSearch = false
       },
       //点击商品分类跳转页面
-      Men(e) {
-        console.log('e',e)
+      toSingleClsaa(record) {
         this.$router.push({
           path: '/singleClass',
           query:{
-            id:e
+            record: JSON.stringify(record)
           }
         })
       },
@@ -155,7 +160,6 @@
         this.showSearch = true
       },
       onLoadingMore() {
-        console.log(1)
         this.loadingMore = true
         this.page+=1
         this.getGoodsList(1)
@@ -187,9 +191,12 @@
         })
       },
       onCardHandle(record) {
-        this.$router.push({path:'/home/Details',query:{
-          id:record.id
-          }})
+        this.$router.push({
+          path:'/goodsDetails',
+          query:{
+            id:record.id
+          }
+        })
       },
       refresh() {
         this.page=1
