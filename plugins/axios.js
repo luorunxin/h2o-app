@@ -3,7 +3,7 @@ import Storage from '~/utils/storage.js'
 import baseURL from './baseURL.js'
 axios.defaults.withCredentials = true// 跨域处理 允许携带cookie
 
-function refreshToken(config, redirect) {
+function refreshToken(config, redirect, route) {
   return new Promise((resolve, reject) => {
     let userInfo = Storage.getLocal('user_info')
     if(!userInfo) return redirect('/login')
@@ -20,6 +20,7 @@ function refreshToken(config, redirect) {
       }
       if(res.data.status == 401){
         axios.post(baseURL.app+'/logout').then(() => {
+          Storage.setLocal('go_path', {path: route.path})
           redirect('/login')
         }).catch(err => reject(err))
       }
@@ -39,7 +40,7 @@ export default function ({ $axios, redirect, route }) {
     switch (code) {
       //错误代码
       case 401:
-        return refreshToken(error.response.config,redirect)
+        return refreshToken(error.response.config,redirect, route)
         break;
       case 403:
         sessionStorage.clear();

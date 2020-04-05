@@ -4,3 +4,13 @@
 .van-dropdown-menu__title{
   color: #ff8000!important;
 }
+.van-toast__text{
+  white-space: nowrap;
+}
+.van-toast{
+  width: auto!important;
+  min-width: 90px!important;
+}
+.van-toast__icon{
+  font-size: 3rem!important;
+}

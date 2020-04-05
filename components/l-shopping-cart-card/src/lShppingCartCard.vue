@@ -17,10 +17,10 @@
         <slot />
       </div>
       <div class="price-box">
-        <span class="price">¥ {{(this.record.price*this.record.num).toFixed(2)}}</span>
+        <span class="price">¥ {{(record.price*record.sku_num).toFixed(2)}}</span>
         <div class="count-box">
           <span class="subtract" @click.stop="substrctHandle">-</span>
-          <span class="number">{{record.num}}</span>
+          <span class="number">{{record.sku_num}}</span>
           <span class="plus" @click.stop="plusHandle">+</span>
         </div>
       </div>
@@ -46,12 +46,12 @@
         this.$emit('onShoppingHandle', this.record)
       },
       substrctHandle() {
-        if(this.record.num == 1) return this.$toast('宝贝不能再减了')
-        this.record.num = parseInt(this.record.num) - 1
+        if(this.record.sku_num == 1) return this.$toast('宝贝不能再减了')
+        this.record.sku_num = parseInt(this.record.sku_num) - 1
         this.$emit('onSubstrctHandle', this.record)
       },
       plusHandle() {
-        this.record.num = parseInt(this.record.num) + 1
+        this.record.sku_num = parseInt(this.record.sku_num) + 1
         this.$emit('onPlusHandle', this.record)
       }
     }
@@ -62,7 +62,6 @@
   .l-shopping-cart-card{
     width: 100%;
     background: white;
-    border-radius: 1rem;
     display: flex;
     align-items: flex-start;
     padding: 3% 0;

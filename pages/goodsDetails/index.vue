@@ -13,7 +13,7 @@
         @click="searchData"
         shape="round"
       />
-      <van-icon slot="headerRight" size="2rem" name="cart-o" />
+      <van-icon @click.stop="toShoppingCart" slot="headerRight" size="2rem" name="cart-o" />
     </l-header>
     <div class="content">
       <van-swipe @change="onChange">
@@ -50,7 +50,7 @@
       <div class="details-single">
         <div class="single-row location" @click.stop="selectSize">
           <span>选择</span>
-          <div>请选择 尺码</div>
+          <div>{{selectedSkuText?`已选:${selectedSkuText}`:'请选择 尺码'}}</div>
           <van-icon size="1rem" color="#999" name="arrow" />
         </div>
         <div class="single-row tag" @click.stop="selectSize">
@@ -92,6 +92,7 @@
       </van-goods-action>
     </div>
     <van-sku
+      ref="goodsSku"
       v-model="showSku"
       :sku="sku"
       :goods="goodsImage"
@@ -99,6 +100,8 @@
       close-on-click-overlay
       @buy-clicked="onBuyClicked"
       @add-cart="onAddCartClicked"
+      @sku-selected="onSkuSelected"
+      @stepper-change="onStepperChange"
     />
     <van-popup
       v-model="showPopup"
@@ -124,6 +127,7 @@
 <script>
   import LHeader from "../../components/l-header/src/lHeader";
   import LSearch from "~/components/l-search/src/lSearch";
+  import CONSTANS from '~/utils/constans.js'
   export default {
     name: "index",
     components: {
@@ -144,6 +148,8 @@
         sizes: [],
         colors: [],
         parameters: [],
+        selectedSku: null,
+        selectedSkuText: '',
         showSku: false,
         sku: {
           // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
@@ -192,11 +198,42 @@
       this.getGoodsById()
     },
     methods: {
+      toShoppingCart() {
+        this.$router.push({
+          path: '/information'
+        })
+      },
+      addShoppingCart() {
+        const loading =this.$toast.loading({
+          message: '加载中...',
+          forbidClick: true
+        })
+        this.$ajax('/addShoppingCart',JSON.stringify(this.selectedSku)).then(res => {
+          loading.clear()
+          if(res.status == 200){
+            this.$toast({
+              message: '添加成功，正在购物车等候...',
+              icon: 'shopping-cart'
+            })
+          }else{
+            this.$toast.fail(res.message)
+          }
+        }).catch(err => {
+          loading.clear()
+          console.error(err)
+          this.$toast.fail('网络异常')
+        })
+      },
       isShowPopup() {
         this.showPopup = true
       },
       onAddCartClicked() {
-
+        if(this.selectedSku){
+          //加入购物车
+          this.addShoppingCart()
+        }else{
+          this.$toast('请先选择商品规格')
+        }
       },
       onBuyClicked() {
 
@@ -205,6 +242,10 @@
         this.showSku = true
       },
       getGoodsById() {
+        const loading = this.$toast.loading({
+          message: '加载中...',
+          forbidClick: true
+        })
         let params = {
           id: this.id
         }
@@ -217,86 +258,112 @@
             }else{
               this.goods.courier_fees = '免运费'
             }
-            let ss = [], cc = []
-            this.goods.amounts.forEach((item,index) => {
-              if(!ss.includes(item.size)){
-                let obj = {}
-                obj.id = item.id
-                obj.size = item.size
-                this.sizes.push(obj)
-                ss.push(item.size)
-              }
-              if(!cc.includes(item.color)){
-                let obj = {}
-                obj.id = item.id
-                obj.color = item.color
-                this.colors.push(obj)
-                cc.push(item.color)
-              }
-              this.sku.stock_num+=item.amount
-            })
-            let sobj = {},cobj = {}, vObj = {}
-            sobj.v = []
-            cobj.v = []
-            this.sizes.forEach(item => {
-              vObj = {}
-              if(!sobj.k) {
-                sobj.k = '尺码'
-                sobj.k_s = 's1'
-              }
-              vObj.id = item.id
-              vObj.name = item.size
-              sobj.v.push(vObj)
-              this.goods.amounts.map(i => {
-                if(i.size === item.size){
-                  i.sid = item.id
-                }
-                return i
-              })
-            })
-            this.sku.tree.push(sobj)
-            this.colors.forEach(item => {
-              vObj = {}
-              if(!cobj.k) {
-                cobj.k = '颜色'
-                cobj.k_s = 's2'
-              }
-              vObj.id = item.id
-              vObj.name = item.color
-              vObj.imgUrl = this.goods.images[1].src
-              vObj.previewImgUrl = this.goods.images[1].src
-              cobj.v.push(vObj)
-              this.goods.amounts.map(i => {
-                if(i.color === item.color){
-                  i.cid = item.id
-                }
-                return i
-              })
-            })
-            console.log(JSON.stringify(this.goods.amounts,null,2))
-            this.goods.amounts.forEach((item,index) => {
-              let obj = {}
-              obj.id = index
-              obj.price = this.goods.price*100
-              obj.s1 = item.sid
-              obj.s2 = item.cid
-              obj.stock_num = item.amount
-              this.sku.list.push(obj)
-            })
-            this.sku.tree.push(cobj)
             this.parameters = this.getParameters(this.goods.parameter)
             this.imageLength = this.goods.images.length
             this.goodsImage.picture = this.goods.images[0].src
             this.sku.price = this.goods.price
+            if(CONSTANS.GOODSCATEGORY.CLOTHING === this.goods.goods_category_id){
+              let ss = [], cc = []
+              this.goods.amounts.forEach((item,index) => {
+                if(!ss.includes(item.size)){
+                  let obj = {}
+                  obj.id = item.id
+                  obj.size = item.size
+                  this.sizes.push(obj)
+                  ss.push(item.size)
+                }
+                if(!cc.includes(item.color)){
+                  let obj = {}
+                  obj.id = item.id
+                  obj.color = item.color
+                  this.colors.push(obj)
+                  cc.push(item.color)
+                }
+                this.sku.stock_num+=item.amount
+              })
+              let sobj = {},cobj = {}, vObj = {}
+              sobj.v = []
+              cobj.v = []
+              this.sizes.forEach(item => {
+                vObj = {}
+                if(!sobj.k) {
+                  sobj.k = '尺码'
+                  sobj.k_s = 's1'
+                }
+                vObj.id = item.id
+                vObj.name = item.size
+                sobj.v.push(vObj)
+                this.goods.amounts.map(i => {
+                  if(i.size === item.size){
+                    i.sid = item.id
+                  }
+                  return i
+                })
+              })
+              this.sku.tree.push(sobj)
+              this.colors.forEach(item => {
+                vObj = {}
+                if(!cobj.k) {
+                  cobj.k = '颜色'
+                  cobj.k_s = 's2'
+                }
+                vObj.id = item.id
+                vObj.name = item.color
+                vObj.imgUrl = this.goods.images[1].src
+                vObj.previewImgUrl = this.goods.images[1].src
+                cobj.v.push(vObj)
+                this.goods.amounts.map(i => {
+                  if(i.color === item.color){
+                    i.cid = item.id
+                  }
+                  return i
+                })
+              })
+              console.log(JSON.stringify(this.goods.amounts,null,2))
+              this.goods.amounts.forEach((item,index) => {
+                let obj = {}
+                obj.id = index
+                obj.price = this.goods.price*100
+                obj.s1 = item.sid
+                obj.s2 = item.cid
+                obj.stock_num = item.amount
+                this.sku.list.push(obj)
+              })
+              this.sku.tree.push(cobj)
+            }
             console.log(JSON.stringify(this.sku,null,2))
+            console.log(JSON.stringify(this.$refs['goodsSku'].getSkuData(),null,2))
+            loading.clear()
           }else{
+            loading.clear()
             this.$toast.fail({
               message: res.message
             })
           }
         }).catch(err=>{
           console.error(err)
+          loading.clear()
         })
+      },
+      onSkuSelected({ skuValue, selectedSku, selectedSkuComb }) {
+        if(CONSTANS.GOODSCATEGORY.CLOTHING === this.goods.goods_category_id){
+          if(selectedSkuComb){
+            for (let i in  this.goods.amounts) {
+              if(this.goods.amounts[i].sid === selectedSkuComb['s1'] &&
+                this.goods.amounts[i].cid === selectedSkuComb['s2']){
+                this.selectedSku = this.goods.amounts[i]
+                this.selectedSku.sku_num = this.$refs['goodsSku'].getSkuData().selectedNum
+                this.selectedSkuText = `"${this.goods.amounts[i].size}" "${this.goods.amounts[i].color}"`
+              }
+            }
+          }else{
+            this.selectedSku = null
+            this.selectedSkuText = ''
+          }
+        }
+      },
+      onStepperChange(num) {
+        if(this.selectedSku) this.selectedSku.sku_num = num
       },
       onChange(index) {
         this.current = index;
@@ -308,13 +375,24 @@
         this.showSearch = false
       },
       toService() {
-
+        this.$router.push({
+          path:'/service/serviceHelp',
+          query: {
+            id:'1',
+            msg:'客服'
+          }
+        })
       },
       onCollect() {
 
       },
       addInformation() {
-
+        if(this.selectedSku) {
+          //加入购物车
+          this.addShoppingCart()
+        }else{
+          this.showSku = true
+        }
       },
       onBuy() {
 
