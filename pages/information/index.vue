@@ -458,7 +458,12 @@
       },
       // 点击卡片任意地方（不包括卡片内的按钮）触发
       onShoppingHandle(record) {
-        console.log(JSON.stringify(record, null, 2))
+        this.$router.push({
+          path: '/goodsDetails',
+          query: {
+            id: record.goods_id
+          }
+        })
       },
       // 点击减号触发
       onSubstrctHandle(record) {

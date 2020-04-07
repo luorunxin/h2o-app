@@ -1,6 +1,16 @@
-# h2o
+# h2o移动端商城
+> 界面优美，功能齐全，高仿天猫
 
-> h2o app
+## 主要技术
+> nuxt + vue@2.0 + vuex + vue-router + axios + vant + scss + websocket
+
+## 项目预览
+---
+![image](https://github.com/luorunxin/h2o-app/assets/img/app1.png)
+![image](https://github.com/luorunxin/h2o-app/assets/img/app2.png)
+![image](https://github.com/luorunxin/h2o-app/assets/img/app3.png)
+![image](https://github.com/luorunxin/h2o-app/assets/img/app4.png)
+![image](https://github.com/luorunxin/h2o-app/assets/img/app5.png)
 
 ## Build Setup
 
@@ -18,5 +28,3 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
