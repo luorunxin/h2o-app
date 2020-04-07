@@ -14,6 +14,12 @@
 ## 接口文档
 <http://www.docway.net/project/1TqkFPWdvRg/1TsfuADNfjU>
 
+## h2o管理系统
+<https://github.com/luorunxin/h2o-sys>
+
+## h2o后端node代码
+<https://github.com/luorunxin/h2o-service>
+
 ## Build Setup
 
 ``` bash
