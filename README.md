@@ -20,6 +20,9 @@
 ## h2o后端node代码
 <https://github.com/luorunxin/h2o-service>
 
+## 私信
+有任何问题或者技术可以找我沟通，加我QQ：791618513，加时请备注"github"
+
 ## Build Setup
 
 ``` bash
