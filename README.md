@@ -5,12 +5,14 @@
 > nuxt + vue@2.0 + vuex + vue-router + axios + vant + scss + websocket
 
 ## 项目预览
----
 ![image](https://github.com/luorunxin/h2o-app/assets/img/app1.png)
 ![image](https://github.com/luorunxin/h2o-app/assets/img/app2.png)
 ![image](https://github.com/luorunxin/h2o-app/assets/img/app3.png)
 ![image](https://github.com/luorunxin/h2o-app/assets/img/app4.png)
 ![image](https://github.com/luorunxin/h2o-app/assets/img/app5.png)
+
+## 接口文档
+<http://www.docway.net/project/1TqkFPWdvRg/1TsfuADNfjU>
 
 ## Build Setup
 
