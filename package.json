@@ -15,7 +15,7 @@
     "@nuxtjs/axios": "^5.9.5",
     "cross-env": "^5.2.0",
     "koa": "^2.6.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.0.0",
     "sass-loader": "^8.0.2",
     "scss-loader": "^0.0.1",
